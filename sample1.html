@@ -1,0 +1,173 @@
+<!--
+        sample1.html
+        
+        Copyright 2008 Diogo Baeder de Paula Pinto <diogobaeder@diogobaeder.com.br>
+        
+        This program is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
+        
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+        
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+        MA 02110-1301, USA.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>jFF sample 1</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 0.13" />
+	<link type="text/css" rel="stylesheet" href="styles.css" />
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="core/js-1.6.js"></script>
+	<script type="text/javascript" src="core/core.js"></script>
+	<script type="text/javascript" src="validators/hastext.js"></script>
+	<script type="text/javascript" src="validators/regex.js"></script>
+	<script type="text/javascript" src="validators/checkedingroup.js"></script>
+	<script type="text/javascript" src="validators/selectedingroup.js"></script>
+	<script type="text/javascript" src="validators/numchars.js"></script>
+	<script type="text/javascript" src="errorhandlers/alert.js"></script>
+	<script type="text/javascript" src="errorhandlers/console.js"></script>
+	<script type="text/javascript" src="errorhandlers/append.js"></script>
+	<script type="text/javascript" src="behaviours/maxchars.js"></script>
+	<script type="text/javascript" src="behaviours/filterchars.js"></script>
+	<script type="text/javascript" src="behaviours/replicator.js"></script>
+	<script type="text/javascript" src="behaviours/filteredreplicator.js"></script>
+	<script type="text/javascript" src="behaviours/maxchecked.js"></script>
+	<script type="text/javascript" src="behaviours/maxselected.js"></script>
+	<script type="text/javascript" src="sample1.js"></script>
+</head>
+
+<body>
+    <div id="mainWrapper">
+        <h1>First sample of jQuery Form Framework</h1>
+        <form action="sample1.html" method="get" id="sampleForm">
+            <div id="formErrors"></div>
+            <div class="odd field">
+                <label for="sampleInput1" class="fixedSize">Required text:</label>
+                <input type="text" id="sampleInput1" name="sample1" />
+                <div class="clear"></div>
+            </div>
+            <div class="even field">
+                <label for="sampleInput2" class="fixedSize">Only digits here:</label>
+                <input type="text" id="sampleInput2" name="sample2" />
+                <div class="clear"></div>
+            </div>
+            <div class="odd field">
+                <label for="sampleInput3" class="fixedSize">An e-mail:</label>
+                <input type="text" id="sampleInput3" name="sample3" />
+                <div class="clear"></div>
+            </div>
+            <div class="even field">
+                <p>Select from 2 to 4 of the checkboxes below:</p>
+                <ul class="checkbox">
+                    <li>
+                        <input class="sampleCheck1" type="checkbox" id="sampleCheck1_1" value="1" name="sample4[]" />
+                        <label for="sampleCheck1_1">One</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck1" type="checkbox" id="sampleCheck1_2" value="2" name="sample4[]" />
+                        <label for="sampleCheck1_2">Two</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck1" type="checkbox" id="sampleCheck1_3" value="3" name="sample4[]" />
+                        <label for="sampleCheck1_3">Three</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck1" type="checkbox" id="sampleCheck1_4" value="4" name="sample4[]" />
+                        <label for="sampleCheck1_4">Four</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck1" type="checkbox" id="sampleCheck1_5" value="5" name="sample4[]" />
+                        <label for="sampleCheck1_5">Five</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="odd field">
+                <p>Select at most 2 checkboxes from below:</p>
+                <ul class="checkbox">
+                    <li>
+                        <input class="sampleCheck2" type="checkbox" id="sampleCheck2_1" value="1" name="sample5[]" />
+                        <label for="sampleCheck2_1">One</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck2" type="checkbox" id="sampleCheck2_2" value="2" name="sample5[]" />
+                        <label for="sampleCheck2_2">Two</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck2" type="checkbox" id="sampleCheck2_3" value="3" name="sample5[]" />
+                        <label for="sampleCheck2_3">Three</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="even field">
+                <p>Select at least 2 checkboxes from below:</p>
+                <ul class="checkbox">
+                    <li>
+                        <input class="sampleCheck3" type="checkbox" id="sampleCheck3_1" value="1" name="sample6[]" />
+                        <label for="sampleCheck3_1">One</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck3" type="checkbox" id="sampleCheck3_2" value="2" name="sample6[]" />
+                        <label for="sampleCheck3_2">Two</label>
+                    </li>
+                    <li>
+                        <input class="sampleCheck3" type="checkbox" id="sampleCheck3_3" value="3" name="sample6[]" />
+                        <label for="sampleCheck3_3">Three</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="odd field">
+                <label for="sampleInput4" class="fixedSize">Required textarea:</label>
+                <textarea id="sampleInput4" name="sample7"></textarea>
+                <div class="clear"></div>
+            </div>
+            <div class="even field">
+                <label for="sampleInput5" class="fixedSize">10 to 20 characters:</label>
+                <textarea id="sampleInput5" name="sample8"></textarea>
+                <div class="clear"></div>
+            </div>
+            <div class="odd field">
+                <label for="sampleInput6" class="fixedSize">Will remove everything that is not alphanumeric or underscore:</label>
+                <textarea id="sampleInput6" name="sample9"></textarea>
+                <div class="clear"></div>
+            </div>
+            <div class="even field">
+                <label for="sampleInput7" class="fixedSize">Replicates the content from the first to the second textarea:</label>
+                <textarea id="sampleInput7"></textarea>
+                <textarea id="sampleInput7_2" name="sample10"></textarea>
+                <div class="clear"></div>
+            </div>
+            <div class="odd field">
+                <label for="sampleInput8" class="fixedSize">Same as above, but filtering the content:</label>
+                <textarea id="sampleInput8"></textarea>
+                <textarea id="sampleInput8_2" name="sample11"></textarea>
+                <div class="clear"></div>
+            </div>
+            <div class="even field">
+                <label for="sampleSelect1" class="fixedSize">Select between 2 and 4 options:</label>
+                <select name="sample12[]" id="sampleSelect1" multiple="multiple">
+                    <option id="sampleSelect1_1" value="1">One</option>
+                    <option id="sampleSelect1_2" value="2">Two</option>
+                    <option id="sampleSelect1_3" value="3">Three</option>
+                    <option id="sampleSelect1_4" value="4">Four</option>
+                    <option id="sampleSelect1_5" value="5">Five</option>
+                </select>
+            </div>
+            <div class="button">
+                <button type="submit" id="sampleButton">Test it!</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
