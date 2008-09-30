@@ -3,36 +3,36 @@ $(document).ready(function(){
     // Some fields to manage, each one handling a different type of error
     var sampleField1 = new jFF.core.Field($('#sampleInput1'), 'Required field!')
         .validator('has_text')
-        .handler('append', '<span class="error">Required field!</span>', $('#sampleInput1').parent());
+        .handler('append', $('<span class="error clear">Required field!</span>'), $('#sampleInput1').parent());
     var sampleField2 = new jFF.core.Field($('#sampleInput2'), 'Only digits here!')
         .validator('reg_ex', /^\d*$/)
-        .handler('append', '<span class="error">Only digits here!</span>', $('#sampleInput2').parent());
+        .handler('append', $('<span class="error clear">Only digits here!</span>'), $('#sampleInput2').parent());
     var sampleField3 = new jFF.core.Field($('#sampleInput3'), 'Not a valid e-mail!')
         .validator('email')
-        .handler('append', '<span class="error">Not a valid e-mail!</span>', $('#sampleInput3').parent());
+        .handler('append', $('<span class="error clear">Not a valid e-mail!</span>'), $('#sampleInput3').parent());
     var sampleField4 = new jFF.core.Field($('.sampleCheck1'), 'Select only from 2 to 4 checkboxes!')
         .validator('checked_in_group', 2, 5)
-        .handler('append', '<span class="error">Select only from 2 to 4 checkboxes!</span>', $('.sampleCheck1').parent().parent());
+        .handler('append', $('<span class="error clear">Select only from 2 to 4 checkboxes!</span>'), $('.sampleCheck1').parent().parent());
     var sampleField5 = new jFF.core.Field($('.sampleCheck2'), 'Select at most 2 checkboxes!')
         .validator('checked_in_group', null, 3)
-        .handler('append', '<span class="error">Select at most 2 checkboxes!</span>', $('.sampleCheck2').parent().parent());
+        .handler('append', $('<span class="error clear">Select at most 2 checkboxes!</span>'), $('.sampleCheck2').parent().parent());
     var sampleField6 = new jFF.core.Field($('.sampleCheck3'), 'Select at least 2 checkboxes!')
         .validator('checked_in_group', 2, null)
-        .handler('append', '<span class="error">Select at least 2 checkboxes!</span>', $('.sampleCheck3').parent().parent());
+        .handler('append', $('<span class="error clear">Select at least 2 checkboxes!</span>'), $('.sampleCheck3').parent().parent());
     var sampleField7 = new jFF.core.Field($('#sampleInput4'), 'Required textarea field!')
         .validator('has_text')
-        .handler('append', '<span class="error">Required textarea field!</span>', $('#sampleInput4').parent());
+        .handler('append', $('<span class="error clear">Required textarea field!</span>'), $('#sampleInput4').parent());
     var sampleField8 = new jFF.core.Field($('#sampleInput5'), 'The number of characters must be between 10 and 20!')
         .validator('num_chars', 10, 21)
-        .handler('append', '<span class="error">The number of characters must be between 10 and 20!</span>', $('#sampleInput5').parent());
+        .handler('append', $('<span class="error clear">The number of characters must be between 10 and 20!</span>'), $('#sampleInput5').parent());
     var sampleField9 = new jFF.core.Field($('#sampleSelect1'), 'Select only from 2 to 4 options!')
         .validator('selected_in_group', 2, 5)
-        .handler('append', '<span class="error">Select only from 2 to 4 options!</span>', $('#sampleSelect1').parent());
+        .handler('append', $('<span class="error clear">Select only from 2 to 4 options!</span>'), $('#sampleSelect1').parent());
     
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
     var sampleManager = new jFF.core.FieldManager(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
-        .handler('append', '<span class="error">Something in the form is not right...</span>', $('div#formErrors'));
+        .handler('append', $('<span class="error clear">Something in the form is not right...</span>'), $('div#formErrors'));
         
     // Adding some validations on blur events of the text input ones
     sampleField1.jObj.blur(function(event){

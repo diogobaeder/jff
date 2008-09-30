@@ -30,6 +30,10 @@ div.field label {
     width: 15em;
 }
 
+div.field input, div.field textarea {
+    clear: right;
+}
+
 div.field ul.checkbox {
     clear: both;
     min-height: 1em;
@@ -53,8 +57,9 @@ div.field label.fixedSize {
     width: 15em;
 }
 
-div.clear {
+.clear {
     position: relative;
     clear: both;
     float: none;
+    display: block;
 }
