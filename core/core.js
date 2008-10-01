@@ -42,7 +42,9 @@ String.prototype.uToCamel = function() {
 };
 
 // Main object, simulating a package
-window.jFF = new Object();
+window.jFF = function() {
+    return new jFF.core.FieldManager();
+};
 
 // Core package
 jFF.core = new Object();
@@ -134,7 +136,7 @@ jFF.core.FieldManager = function() {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        arguments.lengthToArray().forEach(function(element, index, array){
+        arguments.toArray().forEach(function(element, index, array){
             element.managers.push(objRef);
         });
         

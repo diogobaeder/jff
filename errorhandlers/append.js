@@ -7,7 +7,7 @@ jFF.errorhandlers.Append = function(options) {
     this.message = options[0];
     this.jContainer = options[1];
     
-    var jMessage = (objRef.message instanceof jQuery) ? objRef.message : $('<span>'+objRef.message+'</span>');
+    var jMessage = (objRef.message instanceof jQuery) ? objRef.message : jQuery('<span>'+objRef.message+'</span>');
     
     this.show = function(subject) {
         if (!subject.errorVisible) {

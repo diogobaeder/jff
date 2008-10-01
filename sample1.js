@@ -30,7 +30,7 @@ $(document).ready(function(){
         .handler('append', $('<p class="error">Select only from 2 to 4 options!</p>'), $('#sampleSelect1').parent());
     
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
-    var sampleManager = new jFF.core.FieldManager(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9)
+    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
         .handler('append', $('<p class="error">Something in the form is not right...</p>'), $('div#formErrors'));
         
