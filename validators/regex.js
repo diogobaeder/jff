@@ -18,7 +18,7 @@ jFF.validators.RegEx = function(options) {
 
 // Specialized regex validator for e-mails
 jFF.validators.Email = function(options) {
-    var emailPattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
+    var emailPattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/;
     return new jFF.validators.RegEx([emailPattern]);
 };
 
