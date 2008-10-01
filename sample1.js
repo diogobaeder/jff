@@ -1,31 +1,31 @@
 $(document).ready(function(){
     
     // Some fields to manage, each one handling a different type of error
-    var sampleField1 = new jFF.core.Field($('#sampleInput1'), 'Required field!')
+    var sampleField1 = jFFField($('#sampleInput1'), 'Required field!')
         .validator('has_text')
         .handler('append', $('<p class="error">Required field!</p>'), $('#sampleInput1').parent());
-    var sampleField2 = new jFF.core.Field($('#sampleInput2'), 'Only digits here!')
+    var sampleField2 = jFFField($('#sampleInput2'), 'Only digits here!')
         .validator('reg_ex', /^\d*$/)
         .handler('append', $('<p class="error">Only digits here!</p>'), $('#sampleInput2').parent());
-    var sampleField3 = new jFF.core.Field($('#sampleInput3'), 'Not a valid e-mail!')
+    var sampleField3 = jFFField($('#sampleInput3'), 'Not a valid e-mail!')
         .validator('email')
         .handler('append', $('<p class="error">Not a valid e-mail!</p>'), $('#sampleInput3').parent());
-    var sampleField4 = new jFF.core.Field($('.sampleCheck1'), 'Select only from 2 to 4 checkboxes!')
+    var sampleField4 = jFFField($('.sampleCheck1'), 'Select only from 2 to 4 checkboxes!')
         .validator('checked_in_group', 2, 5)
         .handler('append', $('<p class="error">Select only from 2 to 4 checkboxes!</p>'), $('.sampleCheck1').parent().parent());
-    var sampleField5 = new jFF.core.Field($('.sampleCheck2'), 'Select at most 2 checkboxes!')
+    var sampleField5 = jFFField($('.sampleCheck2'), 'Select at most 2 checkboxes!')
         .validator('checked_in_group', null, 3)
         .handler('append', $('<p class="error">Select at most 2 checkboxes!</p>'), $('.sampleCheck2').parent().parent());
-    var sampleField6 = new jFF.core.Field($('.sampleCheck3'), 'Select at least 2 checkboxes!')
+    var sampleField6 = jFFField($('.sampleCheck3'), 'Select at least 2 checkboxes!')
         .validator('checked_in_group', 2, null)
         .handler('append', $('<p class="error">Select at least 2 checkboxes!</p>'), $('.sampleCheck3').parent().parent());
-    var sampleField7 = new jFF.core.Field($('#sampleInput4'), 'Required textarea field!')
+    var sampleField7 = jFFField($('#sampleInput4'), 'Required textarea field!')
         .validator('has_text')
         .handler('append', $('<p class="error">Required textarea field!</p>'), $('#sampleInput4').parent());
-    var sampleField8 = new jFF.core.Field($('#sampleInput5'), 'The number of characters must be between 10 and 20!')
+    var sampleField8 = jFFField($('#sampleInput5'), 'The number of characters must be between 10 and 20!')
         .validator('num_chars', 10, 21)
         .handler('append', $('<p class="error">The number of characters must be between 10 and 20!</p>'), $('#sampleInput5').parent());
-    var sampleField9 = new jFF.core.Field($('#sampleSelect1'), 'Select only from 2 to 4 options!')
+    var sampleField9 = jFFField($('#sampleSelect1'), 'Select only from 2 to 4 options!')
         .validator('selected_in_group', 2, 5)
         .handler('append', $('<p class="error">Select only from 2 to 4 options!</p>'), $('#sampleSelect1').parent());
     

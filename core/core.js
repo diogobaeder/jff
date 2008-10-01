@@ -41,9 +41,14 @@ String.prototype.uToCamel = function() {
     }).join('');
 };
 
-// Main object, simulating a package
+// Main function, acts as a package
 window.jFF = function() {
     return new jFF.core.FieldManager();
+};
+
+// Field instance helper
+window.jFFField = function(jObj, fieldConstraintsMessage) {
+    return new jFF.core.Field(jObj, fieldConstraintsMessage);
 };
 
 // Core package

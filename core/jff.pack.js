@@ -49,9 +49,14 @@ String.prototype.uToCamel = function() {
     }).join('');
 };
 
-// Main object, simulating a package
+// Main function, acts as a package
 window.jFF = function() {
     return new jFF.core.FieldManager();
+};
+
+// Field instance helper
+window.jFFField = function(jObj, fieldConstraintsMessage) {
+    return new jFF.core.Field(jObj, fieldConstraintsMessage);
 };
 
 // Core package
@@ -627,7 +632,7 @@ jFF.validators.RegEx = function(options) {
 
 
 jFF.validators.Email = function(options) {
-    var emailPattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/
+    var emailPattern = /^[\w-]+@([\w-]+\.)+[\w-]+$/;
     return new jFF.validators.RegEx([emailPattern]);
 };
 
