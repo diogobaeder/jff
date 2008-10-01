@@ -81,6 +81,7 @@ jFF.core.FieldManager = function() {
     // Flag to query if all the fields are valid
     this.valid = true;
     
+    this.resetError = false;
     this.errorVisible = false;
     
     // Maps a callback to all the fields of the list, using the current index and field as arguments
@@ -127,8 +128,8 @@ jFF.core.FieldManager = function() {
     
     // Shows the error if there's a handler
     this.showErrors = function() {
-        if (objRef.handlers.length > 0 && !objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+        if (objRef.handlers.length > 0 && (!objRef.errorVisible || objRef.resetError)) {
+            objRef.handlers.forEach(function(element){
                 element.show(objRef);
             });
             objRef.errorVisible = true;
@@ -138,7 +139,7 @@ jFF.core.FieldManager = function() {
     // Hides the error if there's a handler
     this.hideErrors = function() {
         if (objRef.handlers.length > 0 && objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.hide(objRef);
             });
             objRef.errorVisible = false;
@@ -149,7 +150,7 @@ jFF.core.FieldManager = function() {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        arguments.toArray().forEach(function(element, index, array){
+        arguments.toArray().forEach(function(element){
             element.managers.push(objRef);
         });
         
@@ -193,6 +194,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     this.handlers = new Array();
     
     this.jObj = jObj;
+    this.fieldConstraintsMessage = fieldConstraintsMessage;
     
     // Is the field valid?
     this.valid = true;
@@ -228,7 +230,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     // Validates this specific field
     this.validate = function(callback, toggleErrors) {
-        objRef.validators.forEach(function(element, index, array){
+        objRef.validators.forEach(function(element){
             element.validate(objRef);
         });
         
@@ -249,7 +251,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     // Shows the error if there's a handler
     this.showErrors = function() {
         if (objRef.handlers.length > 0 && !objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.show(objRef);
             });
             objRef.errorVisible = true;
@@ -259,7 +261,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     // Hides the error if there's a handler
     this.hideErrors = function() {
         if (objRef.handlers.length > 0 && objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.hide(objRef);
             });
             objRef.errorVisible = false;
@@ -539,6 +541,46 @@ jFF.errorhandlers.Console = function(options) {
     };
     
     this.hide = function(subject) {};
+};
+
+
+
+jFF.errorhandlers.ManagerFieldsAppend = function(options) {
+    var objRef = this;
+    this.mainWrapperText = options[0];
+    this.fieldWrapperText = options[1];
+    this.jContainer = options[2];
+    
+    this.jContent = null;
+    
+    this.show = function(subject) {
+        subject.resetError = true;
+        if (!subject.errorVisible || true) {
+            var summedText = '';
+            subject.fields.forEach(function(element, index){
+                if (!element.valid) {
+                    summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
+                }
+            });
+            var wholeText = objRef.mainWrapperText.replace(/%s/g, summedText);
+            
+            if (!objRef.jContent) {
+                objRef.jContent = jQuery(wholeText);
+            }
+            else {
+                objRef.jContent.remove();
+                objRef.jContent = null;
+                objRef.jContent = jQuery(wholeText);
+            }
+            objRef.jContainer.append(objRef.jContent);
+        }
+    };
+    
+    this.hide = function(subject) {
+        if (subject.errorVisible && objRef.jContent) {
+            objRef.jContent.remove();
+        }
+    };
 };
 
 

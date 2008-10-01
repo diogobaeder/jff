@@ -73,6 +73,7 @@ jFF.core.FieldManager = function() {
     // Flag to query if all the fields are valid
     this.valid = true;
     
+    this.resetError = false;
     this.errorVisible = false;
     
     // Maps a callback to all the fields of the list, using the current index and field as arguments
@@ -119,8 +120,8 @@ jFF.core.FieldManager = function() {
     
     // Shows the error if there's a handler
     this.showErrors = function() {
-        if (objRef.handlers.length > 0 && !objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+        if (objRef.handlers.length > 0 && (!objRef.errorVisible || objRef.resetError)) {
+            objRef.handlers.forEach(function(element){
                 element.show(objRef);
             });
             objRef.errorVisible = true;
@@ -130,7 +131,7 @@ jFF.core.FieldManager = function() {
     // Hides the error if there's a handler
     this.hideErrors = function() {
         if (objRef.handlers.length > 0 && objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.hide(objRef);
             });
             objRef.errorVisible = false;
@@ -141,7 +142,7 @@ jFF.core.FieldManager = function() {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        arguments.toArray().forEach(function(element, index, array){
+        arguments.toArray().forEach(function(element){
             element.managers.push(objRef);
         });
         
@@ -185,6 +186,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     this.handlers = new Array();
     
     this.jObj = jObj;
+    this.fieldConstraintsMessage = fieldConstraintsMessage;
     
     // Is the field valid?
     this.valid = true;
@@ -220,7 +222,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     // Validates this specific field
     this.validate = function(callback, toggleErrors) {
-        objRef.validators.forEach(function(element, index, array){
+        objRef.validators.forEach(function(element){
             element.validate(objRef);
         });
         
@@ -241,7 +243,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     // Shows the error if there's a handler
     this.showErrors = function() {
         if (objRef.handlers.length > 0 && !objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.show(objRef);
             });
             objRef.errorVisible = true;
@@ -251,7 +253,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     // Hides the error if there's a handler
     this.hideErrors = function() {
         if (objRef.handlers.length > 0 && objRef.errorVisible) {
-            objRef.handlers.forEach(function(element, index, array){
+            objRef.handlers.forEach(function(element){
                 element.hide(objRef);
             });
             objRef.errorVisible = false;

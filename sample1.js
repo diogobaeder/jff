@@ -32,7 +32,7 @@ $(document).ready(function(){
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
     var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
-        .handler('append', $('<p class="error">Something in the form is not right...</p>'), $('div#formErrors'));
+        .handler('manager_fields_append', '<div class="error">Something in the form is not right... let\'s see:<ul>%s</ul></div>', '<li>%s</li>', $('div#formErrors'));
         
     // Adding some validations on blur events of the text input ones
     sampleField1.jObj.blur(function(event){
