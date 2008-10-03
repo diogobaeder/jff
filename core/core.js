@@ -247,21 +247,19 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     // Shows the error if there's a handler
     this.showErrors = function() {
-        if (objRef.handlers.length > 0 && !objRef.errorVisible) {
+        if (objRef.handlers.length > 0) {
             objRef.handlers.forEach(function(element){
                 element.show(objRef);
             });
-            objRef.errorVisible = true;
         }
     };
     
     // Hides the error if there's a handler
     this.hideErrors = function() {
-        if (objRef.handlers.length > 0 && objRef.errorVisible) {
+        if (objRef.handlers.length > 0) {
             objRef.handlers.forEach(function(element){
                 element.hide(objRef);
             });
-            objRef.errorVisible = false;
         }
     };
     
