@@ -10,7 +10,7 @@ jFF.validators.RegEx = function(options) {
     this.validate = function(field) {
         var fieldValue = field.jObj.val && field.jObj.val();
         
-        field.valid = fieldValue && objRef.pattern.test(fieldValue);
+        return fieldValue && objRef.pattern.test(fieldValue);
     };
 };
 

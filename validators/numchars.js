@@ -16,20 +16,16 @@ jFF.validators.NumChars = function(options) {
         var chars = field.jObj.val && field.jObj.val();
         
         if (!chars) {
-            field.valid = false;
-            return;
+            return false;
         }
-        
         if (
             (objRef.min === null && chars.length < objRef.max) ||
             (objRef.max === null && chars.length >= objRef.min) ||
             (chars.length >= objRef.min && chars.length < objRef.max)
             ) {
-            field.valid = true;
+            return true;
         }
-        else {
-            field.valid = false;
-        }
+        return false;
     };
 };
 

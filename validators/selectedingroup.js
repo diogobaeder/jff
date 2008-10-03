@@ -16,8 +16,7 @@ jFF.validators.SelectedInGroup = function(options) {
         var selected = field.jObj.find(':selected') || field.jObj.filter(':selected');
         
         if (!selected) {
-            field.valid = false;
-            return;
+            return false;
         }
         
         if (
@@ -25,11 +24,9 @@ jFF.validators.SelectedInGroup = function(options) {
             (objRef.max === null && selected.length >= objRef.min) ||
             (selected.length >= objRef.min && selected.length < objRef.max)
             ) {
-            field.valid = true;
+            return true;
         }
-        else {
-            field.valid = false;
-        }
+        return false;
     };
 };
 

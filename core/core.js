@@ -73,9 +73,6 @@ jFF.core.FieldManager = function() {
     // Flag to query if all the fields are valid
     this.valid = true;
     
-    this.resetError = false;
-    this.errorVisible = false;
-    
     // Maps a callback to all the fields of the list, using the current index and field as arguments
     this.forEach = function(callback) {
         objRef.fields.forEach(callback);
@@ -98,43 +95,46 @@ jFF.core.FieldManager = function() {
     
     // Validates all the fields
     this.validate = function(callback, toggleErrors) {
-        var tempValid = true;
-        objRef.forEach(function(element, index, array) {
-            element.validate(function(fieldValid) {
-                // In case the current field is not valid, deny the whole validation
-                if (!fieldValid) {
-                    tempValid = false;
-                }
-            }, toggleErrors);
-        });
-        objRef.valid = tempValid;
+        objRef.valid = objRef.check(toggleErrors);
         
         if (callback)
             callback(objRef.valid);
             
-        if (!tempValid) objRef.showErrors();
-        else objRef.hideErrors();
+        if (toggleErrors && !objRef.valid) objRef.showErrors();
+        else if (toggleErrors && objRef.valid) objRef.hideErrors();
         
         return objRef;
     };
     
+    // Checks for errors in the fields
+    this.check = function(toggleErrors) {
+        var allValid = true;
+        objRef.forEach(function(field) {
+            field.validate(function(fieldValid) {
+                // In case the current field is not valid, deny the whole validation
+                if (!fieldValid) {
+                    allValid = false;
+                }
+            }, toggleErrors);
+        });
+        return allValid;
+    };
+    
     // Shows the error if there's a handler
     this.showErrors = function() {
-        if (objRef.handlers.length > 0 && (!objRef.errorVisible || objRef.resetError)) {
-            objRef.handlers.forEach(function(element){
-                element.show(objRef);
+        if (objRef.handlers.length > 0) {
+            objRef.handlers.forEach(function(handler){
+                handler.show(objRef);
             });
-            objRef.errorVisible = true;
         }
     };
     
     // Hides the error if there's a handler
     this.hideErrors = function() {
-        if (objRef.handlers.length > 0 && objRef.errorVisible) {
-            objRef.handlers.forEach(function(element){
-                element.hide(objRef);
+        if (objRef.handlers.length > 0) {
+            objRef.handlers.forEach(function(handler){
+                handler.hide(objRef);
             });
-            objRef.errorVisible = false;
         }
     };
     
@@ -142,8 +142,8 @@ jFF.core.FieldManager = function() {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        arguments.toArray().forEach(function(element){
-            element.managers.push(objRef);
+        arguments.toArray().forEach(function(field){
+            field.managers.push(objRef);
         });
         
         return objRef;
@@ -222,22 +222,27 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     // Validates this specific field
     this.validate = function(callback, toggleErrors) {
-        objRef.validators.forEach(function(element){
-            element.validate(objRef);
-        });
+        objRef.valid = objRef.check(toggleErrors);
         
-        if (toggleErrors) {
-            if (objRef.valid) {
-                objRef.hideErrors();
-            }
-            else {
-                objRef.showErrors();
-            }
-        }
+        if (toggleErrors && !objRef.valid) objRef.showErrors();
+        else if (toggleErrors && objRef.valid) objRef.hideErrors();
         
         if (callback) callback(objRef.valid);
         
         return objRef;
+    };
+    
+    // Checks for errors in the fields
+    this.check = function(toggleErrors) {
+        var allValid = true;
+        objRef.validators.forEach(function(validator) {
+            var valid = validator.validate(objRef);
+            // In case the current field is not valid, deny the whole validation
+            if (!valid) {
+                allValid = false;
+            }
+        });
+        return allValid;
     };
     
     // Shows the error if there's a handler

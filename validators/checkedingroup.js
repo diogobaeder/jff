@@ -16,20 +16,16 @@ jFF.validators.CheckedInGroup = function(options) {
         var checked = field.jObj.filter(':checked') || field.jObj.find(':checked');
         
         if (!checked) {
-            field.valid = false;
-            return;
+            return false;
         }
-        
         if (
             (objRef.min === null && checked.length < objRef.max) ||
             (objRef.max === null && checked.length >= objRef.min) ||
             (checked.length >= objRef.min && checked.length < objRef.max)
             ) {
-            field.valid = true;
+            return true;
         }
-        else {
-            field.valid = false;
-        }
+        return false;
     };
 };
 

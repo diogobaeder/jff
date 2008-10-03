@@ -11,30 +11,23 @@ jFF.errorhandlers.ManagerFieldsAppend = function(options) {
     this.jContent = null;
     
     this.show = function(subject) {
-        subject.resetError = true;
-        if (!subject.errorVisible || true) {
-            var summedText = '';
-            subject.fields.forEach(function(element, index){
-                if (!element.valid) {
-                    summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
-                }
-            });
-            var wholeText = objRef.mainWrapperText.replace(/%s/g, summedText);
-            
-            if (!objRef.jContent) {
-                objRef.jContent = jQuery(wholeText);
+        var summedText = '';
+        subject.fields.forEach(function(element){
+            if (!element.valid) {
+                summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
             }
-            else {
-                objRef.jContent.remove();
-                objRef.jContent = null;
-                objRef.jContent = jQuery(wholeText);
-            }
-            objRef.jContainer.append(objRef.jContent);
+        });
+        var wholeText = jQuery(objRef.mainWrapperText.replace(/%s/g, summedText));
+        
+        if (objRef.jContent) {
+            objRef.jContent.remove();
         }
+        objRef.jContent = wholeText;
+        objRef.jContainer.append(objRef.jContent);
     };
     
     this.hide = function(subject) {
-        if (subject.errorVisible && objRef.jContent) {
+        if (objRef.jContent) {
             objRef.jContent.remove();
         }
     };
