@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -10,7 +10,7 @@ jFF.behaviours.MaxSelected = function(options) {
     this.max = options[1];
     
     this.selectedOptions = 0;
-    this.options = this.jField.find('option') || this.jField.filter('option');
+    this.options = this.jField.filter('option').add(this.jField.find('option'));
     
     this.options.bind('click', function(event){
         if (!objRef.active) return;
@@ -37,4 +37,4 @@ jFF.behaviours.MaxSelected = function(options) {
 
 
 
-})();
+})(jQuery);

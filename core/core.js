@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -419,4 +419,4 @@ jFF.behaviours = new Object();
 
 
 
-})();
+})(jQuery);

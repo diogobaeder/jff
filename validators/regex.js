@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -23,4 +23,4 @@ jFF.validators.Email = function(options) {
 };
 
 
-})();
+})(jQuery);

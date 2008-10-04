@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -35,4 +35,4 @@ jFF.behaviours.FilteredReplicator = function(options) {
 
 
 
-})();
+})(jQuery);

@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -17,7 +17,7 @@ jFF.errorhandlers.ManagerFieldsAppend = function(options) {
                 summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
             }
         });
-        var wholeText = jQuery(objRef.mainWrapperText.replace(/%s/g, summedText));
+        var wholeText = $(objRef.mainWrapperText.replace(/%s/g, summedText));
         
         if (objRef.jContent) {
             objRef.jContent.remove();
@@ -35,4 +35,4 @@ jFF.errorhandlers.ManagerFieldsAppend = function(options) {
 
 
 
-})();
+})(jQuery);

@@ -16,7 +16,18 @@ def processed_file_list(fileList):
     for filename in fileList:
         finalFile += file_filtered_content(filename)
         
-    return '(function(){\n'+finalFile+'\n})();'
+    return '(function($){\n'+finalFile+'\n})(jQuery);'
+    
+def pack_to(files, outputName):
+    processedFiles = processed_file_list(files)
+    output = open(outputName, 'w')
+    output.write(processedFiles)
+    
+def minimize_to(files, outputName):
+    processedFiles = processed_file_list(files)
+    processedFiles = jsmin.jsmin(processedFiles)
+    output = open(outputName, 'w')
+    output.write(processedFiles)
 
 
 
@@ -44,9 +55,6 @@ if __name__ == '__main__':
         'behaviours/replicator.js',
         'behaviours/maxselected.js',
     ]
-    processedFiles = processed_file_list(files)
-    packed = open('core/jff.pack.js', 'w')
-    packed.write(processedFiles)
-    minifiedFiles = jsmin.jsmin(processedFiles)
-    minified = open('core/jff.pack.min.js', 'w')
-    minified.write(minifiedFiles)
+    minimize_to(['core/core.js'], 'core/core.min.js')
+    pack_to(files, 'core/jff.pack.js')
+    minimize_to(files, 'core/jff.pack.min.js')

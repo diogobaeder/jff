@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -432,7 +432,7 @@ jFF.validators.CheckedInGroup = function(options) {
     this.max = options[1];
     
     this.validate = function(field) {
-        var checked = field.jObj.filter(':checked') || field.jObj.find(':checked');
+        var checked = field.jObj.filter(':checked').add(field.jObj.find(':checked'));
         
         if (!checked) {
             return false;
@@ -526,7 +526,7 @@ jFF.validators.SelectedInGroup = function(options) {
     this.max = options[1];
     
     this.validate = function(field) {
-        var selected = field.jObj.find(':selected') || field.jObj.filter(':selected');
+        var selected = field.jObj.filter(':selected').add(field.jObj.find(':selected'));
         
         if (!selected) {
             return false;
@@ -567,7 +567,7 @@ jFF.errorhandlers.Append = function(options) {
     this.jContainer = options[1];
     this.errorVisible = false;
     
-    var jMessage = (objRef.message instanceof jQuery) ? objRef.message : jQuery('<span>'+objRef.message+'</span>');
+    var jMessage = (objRef.message instanceof $) ? objRef.message : $('<span>'+objRef.message+'</span>');
     
     this.show = function(subject) {
         if (!objRef.errorVisible) {
@@ -618,7 +618,7 @@ jFF.errorhandlers.ManagerFieldsAppend = function(options) {
                 summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
             }
         });
-        var wholeText = jQuery(objRef.mainWrapperText.replace(/%s/g, summedText));
+        var wholeText = $(objRef.mainWrapperText.replace(/%s/g, summedText));
         
         if (objRef.jContent) {
             objRef.jContent.remove();
@@ -749,7 +749,7 @@ jFF.behaviours.MaxChecked = function(options) {
     this.max = options[1];
     
     this.checkedBoxes = 0;
-    this.checks = this.jField.filter(':checkbox') || this.jField.find(':checkbox');
+    this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
     this.checks.bind('click', function(event){
         if (!objRef.active) return;
@@ -816,7 +816,7 @@ jFF.behaviours.MaxSelected = function(options) {
     this.max = options[1];
     
     this.selectedOptions = 0;
-    this.options = this.jField.find('option') || this.jField.filter('option');
+    this.options = this.jField.filter('option').add(this.jField.find('option'));
     
     this.options.bind('click', function(event){
         if (!objRef.active) return;
@@ -843,4 +843,4 @@ jFF.behaviours.MaxSelected = function(options) {
 
 
 
-})();
+})(jQuery);

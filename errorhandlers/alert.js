@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -15,4 +15,4 @@ jFF.errorhandlers.Alert = function(options) {
 
 
 
-})();
+})(jQuery);

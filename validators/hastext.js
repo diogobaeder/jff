@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -11,4 +11,4 @@ jFF.validators.HasText = function(options) {
 };
 
 
-})();
+})(jQuery);

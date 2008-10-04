@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -34,4 +34,4 @@ jFF.behaviours.MaxChars = function(options) {
 
 
 
-})();
+})(jQuery);

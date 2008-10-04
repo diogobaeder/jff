@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -30,4 +30,4 @@ jFF.behaviours.Replicator = function(options) {
 
 
 
-})();
+})(jQuery);

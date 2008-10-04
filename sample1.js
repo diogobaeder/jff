@@ -11,22 +11,22 @@ $(document).ready(function(){
         .validator('email')
         .handler('append', $('<p class="error">Not a valid e-mail!</p>'), $('#sampleInput3').parent());
     var sampleField4 = jFFField($('.sampleCheck1'), 'Select only from 2 to 4 checkboxes!')
-        .validator('checked_in_group', 2, 5)
+        .validator('checked_in_group', 2, 4)
         .handler('append', $('<p class="error">Select only from 2 to 4 checkboxes!</p>'), $('.sampleCheck1').parent().parent());
     var sampleField5 = jFFField($('.sampleCheck2'), 'Select at most 2 checkboxes!')
-        .validator('checked_in_group', null, 3)
+        .validator('max_checked', 2)
         .handler('append', $('<p class="error">Select at most 2 checkboxes!</p>'), $('.sampleCheck2').parent().parent());
     var sampleField6 = jFFField($('.sampleCheck3'), 'Select at least 2 checkboxes!')
-        .validator('checked_in_group', 2, null)
+        .validator('min_checked', 2)
         .handler('append', $('<p class="error">Select at least 2 checkboxes!</p>'), $('.sampleCheck3').parent().parent());
     var sampleField7 = jFFField($('#sampleInput4'), 'Required textarea field!')
         .validator('has_text')
         .handler('append', $('<p class="error">Required textarea field!</p>'), $('#sampleInput4').parent());
     var sampleField8 = jFFField($('#sampleInput5'), 'The number of characters must be between 10 and 20!')
-        .validator('num_chars', 10, 21)
+        .validator('num_chars', 10, 20)
         .handler('append', $('<p class="error">The number of characters must be between 10 and 20!</p>'), $('#sampleInput5').parent());
     var sampleField9 = jFFField($('#sampleSelect1'), 'Select only from 2 to 4 options!')
-        .validator('selected_in_group', 2, 5)
+        .validator('selected_in_group', 2, 4)
         .handler('append', $('<p class="error">Select only from 2 to 4 options!</p>'), $('#sampleSelect1').parent());
     
     // Now, a composite field. One of the following, at least, must me valid

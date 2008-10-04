@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
 
 
@@ -10,7 +10,7 @@ jFF.behaviours.MaxChecked = function(options) {
     this.max = options[1];
     
     this.checkedBoxes = 0;
-    this.checks = this.jField.filter(':checkbox') || this.jField.find(':checkbox');
+    this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
     this.checks.bind('click', function(event){
         if (!objRef.active) return;
@@ -37,4 +37,4 @@ jFF.behaviours.MaxChecked = function(options) {
 
 
 
-})();
+})(jQuery);
