@@ -2,19 +2,22 @@
 
 
 
-jFF.behaviours.MaxChecked = function(jField, max) {
+jFF.behaviours.MaxChecked = function(options) {
     var objRef = this;
     this.active = false;
     
+    this.jField = options[0];
+    this.max = options[1];
+    
     this.checkedBoxes = 0;
-    this.checks = jField.filter(':checkbox') || jField.find(':checkbox');
+    this.checks = this.jField.filter(':checkbox') || this.jField.find(':checkbox');
     
     this.checks.bind('click', function(event){
         if (!objRef.active) return;
         var checkbox = event.target;
         objRef.checkedBoxes = objRef.checks.filter(':checked').length;
         
-        if (objRef.checkedBoxes > max) {
+        if (objRef.checkedBoxes > objRef.max) {
             checkbox.checked = false;
         }
     });

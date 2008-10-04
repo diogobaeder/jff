@@ -29,8 +29,16 @@ $(document).ready(function(){
         .validator('selected_in_group', 2, 5)
         .handler('append', $('<p class="error">Select only from 2 to 4 options!</p>'), $('#sampleSelect1').parent());
     
+    // Now, a composite field. One of the following, at least, must me valid
+    var sampleField10 = jFFField($('#sampleInput9'))
+        .validator('reg_ex', /^\d*$/);
+    var sampleField11 = jFFField($('#sampleInput10'))
+        .validator('reg_ex', /^[a-zA-Z]*$/);
+    var sampleCompositeField1 = jFFCompositeField('The first optional input must have numbers or the second must have alphabetic chars!', 1)
+        .add(sampleField10, sampleField11);
+    
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
-    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9)
+    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleCompositeField1)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
         .handler('manager_fields_append', '<div class="error">Something in the form is not right... let\'s see:<ul>%s</ul></div>', '<li>%s</li>', $('div#formErrors'));
         
@@ -58,12 +66,12 @@ $(document).ready(function(){
     });
     
     // Some sample behaviours
-    new jFF.behaviours.MaxChars($('#sampleInput5'), 20);
-    new jFF.behaviours.FilterChars($('#sampleInput6'), [/\W/]);
-    new jFF.behaviours.Replicator($('#sampleInput7'), $('#sampleInput7_2'));
-    new jFF.behaviours.FilteredReplicator($('#sampleInput8'), $('#sampleInput8_2'), [/\W/]);
-    new jFF.behaviours.MaxChecked($('.sampleCheck2'), 2);
-    new jFF.behaviours.MaxSelected($('#sampleSelect1'), 4).stop().start();
+    jFFBehaviour('max_chars', $('#sampleInput5'), 20);
+    jFFBehaviour('filter_chars', $('#sampleInput6'), [/\W/]);
+    jFFBehaviour('replicator', $('#sampleInput7'), $('#sampleInput7_2'));
+    jFFBehaviour('filtered_replicator', $('#sampleInput8'), $('#sampleInput8_2'), [/\W/]);
+    jFFBehaviour('max_checked', $('.sampleCheck2'), 2);
+    jFFBehaviour('max_selected', $('#sampleSelect1'), 4).stop().start();
 
     window.sampleManager = sampleManager;
 });

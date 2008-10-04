@@ -2,14 +2,17 @@
 
 
 
-jFF.behaviours.Replicator = function(jField, jDestination) {
+jFF.behaviours.Replicator = function(options) {
     var objRef = this;
     this.active = false;
     
-    jField.bind('keyup', function(event){
+    this.jField = options[0];
+    this.jDestination = options[1];
+    
+    this.jField.bind('keyup', function(event){
         if (!objRef.active) return;
-        var text = jField.val();
-        jDestination.val(text);
+        var text = objRef.jField.val();
+        objRef.jDestination.val(text);
     });
     
     this.start = function() {

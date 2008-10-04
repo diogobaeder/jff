@@ -2,17 +2,20 @@
 
 
 
-jFF.behaviours.MaxChars = function(jField, max) {
+jFF.behaviours.MaxChars = function(options) {
     var objRef = this;
     this.active = false;
     
-    jField.bind('keyup', function(event){
+    this.jField = options[0];
+    this.max = options[1];
+    
+    this.jField.bind('keyup', function(event){
         if (!objRef.active) return;
-        var text = jField.val();
+        var text = objRef.jField.val();
         
-        if (text.length > max-1) {
-            text = text.substring(0, max);
-            jField.val(text);
+        if (text.length > objRef.max - 1) {
+            text = text.substring(0, objRef.max);
+            objRef.jField.val(text);
         }
     });
     

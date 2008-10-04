@@ -2,19 +2,22 @@
 
 
 
-jFF.behaviours.MaxSelected = function(jField, max) {
+jFF.behaviours.MaxSelected = function(options) {
     var objRef = this;
     this.active = false;
     
-    this.selectedOptions = 0;
-    this.options = jField.find('option') || jField.filter('option');
+    this.jField = options[0];
+    this.max = options[1];
     
-    objRef.options.bind('click', function(event){
+    this.selectedOptions = 0;
+    this.options = this.jField.find('option') || this.jField.filter('option');
+    
+    this.options.bind('click', function(event){
         if (!objRef.active) return;
         var option = event.target;
         objRef.selectedOptions = objRef.options.filter(':selected').length;
         
-        if (objRef.selectedOptions > max) {
+        if (objRef.selectedOptions > objRef.max) {
             option.selected = false;
         }
     });

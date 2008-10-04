@@ -51,6 +51,17 @@ window.jFFField = function(jObj, fieldConstraintsMessage) {
     return new jFF.core.Field(jObj, fieldConstraintsMessage);
 };
 
+// Field instance helper
+window.jFFCompositeField = function(fieldConstraintsMessage, minValid) {
+    return new jFF.core.CompositeField(fieldConstraintsMessage, minValid);
+};
+
+// Behaviour instance helper
+window.jFFBehaviour = function() {
+    var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+    return jFF.core.Factories.behaviour(arguments[0], args);
+};
+
 // Core package
 jFF.core = new Object();
 
@@ -109,7 +120,7 @@ jFF.core.FieldManager = function() {
     // Checks for errors in the fields
     this.check = function(toggleErrors) {
         var allValid = true;
-        objRef.forEach(function(field) {
+        objRef.fields.forEach(function(field) {
             field.validate(function(fieldValid) {
                 // In case the current field is not valid, deny the whole validation
                 if (!fieldValid) {
@@ -190,9 +201,6 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     // Is the field valid?
     this.valid = true;
-    
-    // Is the field error visible? (To be used by some error handlers)
-    this.errorVisible = false;
     
     // Adds a validator
     this.validator = function() {
@@ -278,6 +286,112 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     };
 };
 
+
+
+// Composite field. Acts like a Field, but handles a group of Fields
+jFF.core.CompositeField = function(fieldConstraintsMessage, minValid) {
+    var objRef = this;
+    
+    this.managers = new Array();
+    this.handlers = new Array();
+    this.fields = new Array();
+    
+    this.fieldConstraintsMessage = fieldConstraintsMessage;
+    this.minValid = minValid;
+    
+    // Is the composite field valid?
+    this.valid = true;
+    
+    // Adds an error handler
+    this.handler = function() {
+        if (arguments.length == 1 && typeof arguments[0] != 'string') {
+            objRef.handlers.push(arguments[0]);
+        }
+        else {
+            var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+            objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
+        }
+        
+        return objRef;
+    };
+    
+    // Validates all the fields
+    this.validate = function(callback, toggleErrors) {
+        objRef.valid = objRef.check(toggleErrors);
+        
+        if (callback)
+            callback(objRef.valid);
+            
+        if (toggleErrors && !objRef.valid) objRef.showErrors();
+        else if (toggleErrors && objRef.valid) objRef.hideErrors();
+        
+        return objRef;
+    };
+    
+    // Checks for errors in the fields
+    this.check = function(toggleErrors) {
+        var valid = 0;
+        objRef.fields.forEach(function(field) {
+            field.validate(function(fieldValid) {
+                // If the current field is valid, increment the valid fields counter
+                if (fieldValid) valid++;
+            }, toggleErrors);
+        });
+        return valid >= objRef.minValid;
+    };
+    
+    // Shows the error if there's a handler
+    this.showErrors = function() {
+        if (objRef.handlers.length > 0) {
+            objRef.handlers.forEach(function(element){
+                element.show(objRef);
+            });
+        }
+    };
+    
+    // Hides the error if there's a handler
+    this.hideErrors = function() {
+        if (objRef.handlers.length > 0) {
+            objRef.handlers.forEach(function(element){
+                element.hide(objRef);
+            });
+        }
+    };
+    
+    // Adds a listener to this field
+    this.manager = function(fieldManager) {
+        fieldManager.add(objRef);
+        
+        return objRef;
+    };
+    
+    // Removes a listener from this field
+    this.removeManager = function(fieldManager) {
+        fieldManager.remove(objRef);
+        
+        return objRef;
+    };
+    
+    // Adds one or more items to the field list
+    this.add = function() {
+        objRef.fields.push.apply(objRef.fields, arguments);
+        
+        return objRef;
+    };
+    
+    // Removes a field from the list
+    this.remove = function(field) {
+        objRef.fields.removeAll(field);
+        
+        return objRef;
+    };
+    
+    // Pulls (removes and returns) an item from the field list
+    this.pull = function(index) {
+        return objRef.fields.pull(index);
+    };
+};
+
 // Object factories
 jFF.core.Factories = {
     handler: function(name, options) {
@@ -287,6 +401,11 @@ jFF.core.Factories = {
     
     validator: function(name, options) {
         var klass = jFF.validators[name.uToCamel()];
+        return new klass(options);
+    },
+    
+    behaviour: function(name, options) {
+        var klass = jFF.behaviours[name.uToCamel()];
         return new klass(options);
     }
 };
