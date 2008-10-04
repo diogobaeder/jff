@@ -7,7 +7,7 @@
 // is inside the range delimited by the parameters
 // Pass null as one of the parameters to unlimit the range
 // at the respective extremity
-jFF.validators.SelectedInGroup = function(options) {
+jFF.validators.NumSelected = function(options) {
     var objRef = this;
     this.min = options[0];
     this.max = options[1];
@@ -34,10 +34,10 @@ jFF.validators.SelectedInGroup = function(options) {
 
 // Shortcuts
 jFF.validators.MaxSelected = function(max) {
-    return new jFF.validators.SelectedInGroup([null, max]);
+    return new jFF.validators.NumSelected([null, max]);
 };
 jFF.validators.MinSelected = function(min) {
-    return new jFF.validators.SelectedInGroup([min, null]);
+    return new jFF.validators.NumSelected([min, null]);
 };
 
 

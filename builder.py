@@ -37,11 +37,11 @@ if __name__ == '__main__':
         # Core
         'core/core.js',
         # Validators
-        'validators/checkedingroup.js',
+        'validators/numchecked.js',
         'validators/hastext.js',
         'validators/numchars.js',
         'validators/regex.js',
-        'validators/selectedingroup.js',
+        'validators/numselected.js',
         # Error handlers
         'errorhandlers/alert.js',
         'errorhandlers/append.js',

@@ -18,6 +18,7 @@ jFF.validators.NumChars = function(options) {
         if (!chars) {
             return false;
         }
+        
         if (
             (objRef.min === null && chars.length <= objRef.max) ||
             (objRef.max === null && chars.length >= objRef.min) ||
@@ -27,6 +28,16 @@ jFF.validators.NumChars = function(options) {
         }
         return false;
     };
+};
+
+
+
+// Shortcuts
+jFF.validators.MaxChars = function(max) {
+    return new jFF.validators.NumChars([null, max]);
+};
+jFF.validators.MinChars = function(min) {
+    return new jFF.validators.NumChars([min, null]);
 };
 
 

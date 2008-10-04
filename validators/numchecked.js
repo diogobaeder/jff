@@ -7,7 +7,7 @@
 // is inside the range delimited by the parameters
 // Pass null as one of the parameters to unlimit the range
 // at the respective extremity
-jFF.validators.CheckedInGroup = function(options) {
+jFF.validators.NumChecked = function(options) {
     var objRef = this;
     this.min = options[0];
     this.max = options[1];
@@ -18,6 +18,7 @@ jFF.validators.CheckedInGroup = function(options) {
         if (!checked) {
             return false;
         }
+        
         if (
             (objRef.min === null && checked.length <= objRef.max) ||
             (objRef.max === null && checked.length >= objRef.min) ||
@@ -33,10 +34,10 @@ jFF.validators.CheckedInGroup = function(options) {
 
 // Shortcuts
 jFF.validators.MaxChecked = function(max) {
-    return new jFF.validators.CheckedInGroup([null, max]);
+    return new jFF.validators.NumChecked([null, max]);
 };
 jFF.validators.MinChecked = function(min) {
-    return new jFF.validators.CheckedInGroup([min, null]);
+    return new jFF.validators.NumChecked([min, null]);
 };
 
 
