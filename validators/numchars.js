@@ -13,7 +13,8 @@ jFF.validators.NumChars = function(options) {
     this.max = options[1];
     
     this.validate = function(field) {
-        var chars = field.jObj.val && field.jObj.val();
+        var textFieldSelectors = ':text,:password,textarea';
+        var chars = field.jObj.filter(textFieldSelectors).add(field.jObj.find(textFieldSelectors)).val();
         
         if (!chars) {
             return false;
