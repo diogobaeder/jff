@@ -1,3 +1,4 @@
+(function(){
 
 
 
@@ -841,3 +842,5 @@ jFF.behaviours.MaxSelected = function(options) {
 };
 
 
+
+})();

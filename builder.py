@@ -16,7 +16,7 @@ def processed_file_list(fileList):
     for filename in fileList:
         finalFile += file_filtered_content(filename)
         
-    return finalFile
+    return '(function(){\n'+finalFile+'\n})();'
 
 
 
