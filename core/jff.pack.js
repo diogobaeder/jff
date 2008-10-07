@@ -473,6 +473,29 @@ jFF.validators.HasText = function(options) {
 
 
 
+jFF.validators.HasValue = function(options) {
+    
+    // Valida se existe texto no campo
+    this.validate = function(field) {
+        return Boolean(field.jObj.val && field.jObj.val());
+    };
+};
+
+
+
+
+jFF.validators.SelectedHasValue = function(options) {
+    
+    // Valida se existe texto no campo
+    this.validate = function(field) {
+        var jSelected = field.jObj.filter(':selected').add(field.jObj.find(':selected'));
+        return Boolean(jSelected.val && jSelected.val());
+    };
+};
+
+
+
+
     
 // Validates if the number of characters
 // is inside the range delimited by the parameters

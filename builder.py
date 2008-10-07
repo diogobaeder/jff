@@ -39,6 +39,8 @@ if __name__ == '__main__':
         # Validators
         'validators/numchecked.js',
         'validators/hastext.js',
+        'validators/hasvalue.js',
+        'validators/selectedhasvalue.js',
         'validators/numchars.js',
         'validators/regex.js',
         'validators/numselected.js',

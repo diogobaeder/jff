@@ -28,6 +28,9 @@ $(document).ready(function(){
     var sampleField9 = jFFField($('#sampleSelect1'), 'Select only from 2 to 4 options!')
         .validator('num_selected', 2, 4)
         .handler('append', $('<p class="error">Select only from 2 to 4 options!</p>'), $('#sampleSelect1').parent());
+    var sampleField12 = jFFField($('#sampleSelect2'), 'Not an option!')
+        .validator('selected_has_value')
+        .handler('append', $('<p class="error">Not an option!</p>'), $('#sampleSelect2').parent());
     
     // Now, a composite field. One of the following, at least, must me valid
     var sampleField10 = jFFField($('#sampleInput9'))
@@ -38,7 +41,7 @@ $(document).ready(function(){
         .add(sampleField10, sampleField11);
     
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
-    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleCompositeField1)
+    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleField12, sampleCompositeField1)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
         .handler('manager_fields_append', '<div class="error">Something in the form is not right... let\'s see:<ul>%s</ul></div>', '<li>%s</li>', $('div#formErrors'));
         
