@@ -49,6 +49,7 @@ if __name__ == '__main__':
         'errorhandlers/append.js',
         'errorhandlers/console.js',
         'errorhandlers/managerfieldsappend.js',
+        'errorhandlers/custom.js',
         # Behaviours
         'behaviours/filterchars.js',
         'behaviours/filteredreplicator.js',
