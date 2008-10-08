@@ -2,10 +2,14 @@
 
 
 
-// Helper method for objects
-Object.prototype.toArray = function() {
-    if (this.length) {
-        return Array.prototype.slice.call(this, this[0], this.length);
+// Helper function for objects
+var objectToArray = function(object) {
+    if (object.length) {
+        var elements = new Array();
+        for (var i = 0; i < object.length; i++) {
+            elements.push(object[i]);
+        }
+        return elements;
     }
 };
 // Helper methods for arrays
@@ -58,7 +62,7 @@ window.jFFCompositeField = function(fieldConstraintsMessage, minValid) {
 
 // Behaviour instance helper
 window.jFFBehaviour = function() {
-    var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+    var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
     return jFF.core.Factories.behaviour(arguments[0], args);
 };
 
@@ -76,7 +80,7 @@ jFF.core.FieldManager = function() {
     
     // Adds the fields, if passed as arguments
     if (arguments.length > 0) {
-        arguments.toArray().forEach(function(element, index, array){
+        objectToArray(arguments).forEach(function(element, index, array){
             objRef.fields.push(element);
         });
     }
@@ -97,7 +101,7 @@ jFF.core.FieldManager = function() {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
@@ -153,7 +157,7 @@ jFF.core.FieldManager = function() {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        arguments.toArray().forEach(function(field){
+        objectToArray(arguments).forEach(function(field){
             field.managers.push(objRef);
         });
         
@@ -208,7 +212,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
             objRef.validators.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
             objRef.validators.push(jFF.core.Factories.validator(arguments[0], args));
         }
         
@@ -221,7 +225,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
@@ -308,7 +312,7 @@ jFF.core.CompositeField = function(fieldConstraintsMessage, minValid) {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? arguments.toArray().slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
