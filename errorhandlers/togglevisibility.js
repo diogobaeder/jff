@@ -15,7 +15,9 @@ jFF.errorhandlers.ToggleVisibility = function(options) {
                     element.show();
                 });
             }
-            else objRef.toShow.show();
+            else if(objRef.toShow) {
+                objRef.toShow.show();
+            }
             objRef.errorVisible = true;
         }
     };
@@ -27,7 +29,9 @@ jFF.errorhandlers.ToggleVisibility = function(options) {
                     element.hide();
                 });
             }
-            else objRef.toHide.hide();
+            else if(objRef.toHide) {
+                objRef.toHide.hide();
+            }
             objRef.errorVisible = false;
         }
     };
