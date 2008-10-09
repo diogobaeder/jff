@@ -44,6 +44,7 @@ if __name__ == '__main__':
         'validators/numchars.js',
         'validators/regex.js',
         'validators/numselected.js',
+        'validators/custom.js',
         # Error handlers
         'errorhandlers/alert.js',
         'errorhandlers/append.js',
