@@ -71,10 +71,54 @@ $(document).ready(function(){
     // Some sample behaviours
     jFFBehaviour('max_chars', $('#sampleInput5'), 20);
     jFFBehaviour('max_checked', $('.sampleCheck2'), 2);
-    jFFBehaviour('max_selected', $('#sampleSelect1'), 4).stop().start();
+    jFFBehaviour('max_selected', $('#sampleSelect1'), 4);
     jFFBehaviour('filter_chars', $('#sampleInput6'), [/\W/]);
     jFFBehaviour('replicator', $('#sampleInput7'), $('#sampleInput7_2'));
     jFFBehaviour('filtered_replicator', $('#sampleInput8'), $('#sampleInput8_2'), [/\W/]);
+    
+    // Some special behaviours (monitors)
+    var checkMonitor = jFFBehaviour('check_monitor', $('.sampleCheck1').parent())
+        .tracker($('#sampleCheck1_trackers'),
+            function(checked){
+                return '<span>'+checked.next('label').text()+' <a href="#" class="uncheck">(X)</a></span> ';
+            },
+            function(tracker){
+                return tracker.find('a.uncheck');
+            }
+        );
+    $('#sampleCheck1_all').click(function(event){
+        event.preventDefault();
+        checkMonitor.all();
+    });
+    $('#sampleCheck1_none').click(function(event){
+        event.preventDefault();
+        checkMonitor.none();
+    });
+    $('#sampleCheck1_invert').click(function(event){
+        event.preventDefault();
+        checkMonitor.invert();
+    });
+    var selectMonitor = jFFBehaviour('select_monitor', $('#sampleSelect1'))
+        .tracker($('#sampleSelect1_trackers'),
+            function(selected){
+                return '<span>'+selected.text()+' <a href="#" class="unselect">(X)</a></span> ';
+            },
+            function(tracker){
+                return tracker.find('a.unselect');
+            }
+        );
+    $('#sampleSelect1_all').click(function(event){
+        event.preventDefault();
+        selectMonitor.all();
+    });
+    $('#sampleSelect1_none').click(function(event){
+        event.preventDefault();
+        selectMonitor.none();
+    });
+    $('#sampleSelect1_invert').click(function(event){
+        event.preventDefault();
+        selectMonitor.invert();
+    });
 
     window.sampleManager = sampleManager;
 });

@@ -59,6 +59,8 @@ if __name__ == '__main__':
         'behaviours/maxchecked.js',
         'behaviours/replicator.js',
         'behaviours/maxselected.js',
+        'behaviours/checkmonitor.js',
+        'behaviours/selectmonitor.js',
     ]
     minimize_to(['core/core.js'], 'core/core.min.js')
     pack_to(files, 'core/jff.pack.js')
