@@ -960,6 +960,7 @@ jFF.behaviours.MaxSelected = function(options) {
 
 
 
+/* Original functionality idea by Juliano Affonso */
 jFF.behaviours.CheckMonitor = function(options) {
     var objRef = this;
     this.active = false;
@@ -1068,6 +1069,7 @@ jFF.behaviours.CheckMonitor = function(options) {
 
 
 
+/* Original functionality idea by Juliano Affonso */
 jFF.behaviours.SelectMonitor = function(options) {
     var objRef = this;
     this.active = false;

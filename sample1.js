@@ -80,7 +80,7 @@ $(document).ready(function(){
     var checkMonitor = jFFBehaviour('check_monitor', $('.sampleCheck1').parent())
         .tracker($('#sampleCheck1_trackers'),
             function(checked){
-                return '<span>'+checked.next('label').text()+' <a href="#" class="uncheck">(X)</a></span> ';
+                return '<span>'+checked.next('label').text()+' was checked <a href="#" class="uncheck">(uncheck it)</a> </span> ';
             },
             function(tracker){
                 return tracker.find('a.uncheck');
@@ -101,7 +101,7 @@ $(document).ready(function(){
     var selectMonitor = jFFBehaviour('select_monitor', $('#sampleSelect1'))
         .tracker($('#sampleSelect1_trackers'),
             function(selected){
-                return '<span>'+selected.text()+' <a href="#" class="unselect">(X)</a></span> ';
+                return '<span>'+selected.text()+' was selected <a href="#" class="unselect">(unselect it)</a> </span> ';
             },
             function(tracker){
                 return tracker.find('a.unselect');
