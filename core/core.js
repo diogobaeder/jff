@@ -46,18 +46,18 @@ String.prototype.uToCamel = function() {
 };
 
 // Main function, acts as a package
-window.jFF = function() {
-    return new jFF.core.FieldManager();
+window.jFF = function(message, focusAndBlur) {
+    return new jFF.core.FieldManager(message, focusAndBlur);
 };
 
 // Field instance helper
-window.jFFField = function(jObj, fieldConstraintsMessage, focusAndBlur) {
-    return new jFF.core.Field(jObj, fieldConstraintsMessage, focusAndBlur);
+window.jFFField = function(jObj, message, focusAndBlur) {
+    return new jFF.core.Field(jObj, message, focusAndBlur);
 };
 
 // Field instance helper
-window.jFFCompositeField = function(fieldConstraintsMessage, minValid, focusAndBlur) {
-    return new jFF.core.CompositeField(fieldConstraintsMessage, minValid, focusAndBlur);
+window.jFFCompositeField = function(message, minValid, focusAndBlur) {
+    return new jFF.core.CompositeField(message, minValid, focusAndBlur);
 };
 
 // Behaviour instance helper
@@ -72,18 +72,12 @@ jFF.core = new Object();
 
 
 // Field manager for the validations
-jFF.core.FieldManager = function() {
+jFF.core.FieldManager = function(message, focusAndBlur) {
     var objRef = this;
     
     this.fields = new Array();
     this.handlers = new Array();
-    
-    // Adds the fields, if passed as arguments
-    if (arguments.length > 0) {
-        objectToArray(arguments).forEach(function(element, index, array){
-            objRef.fields.push(element);
-        });
-    }
+    this.message = message;
     
     // Flag to query if all the fields are valid
     this.valid = true;
@@ -159,6 +153,15 @@ jFF.core.FieldManager = function() {
         
         objectToArray(arguments).forEach(function(field){
             field.managers.push(objRef);
+            
+            if (focusAndBlur) {
+                field.jObj.focus(function(){
+                    objRef.hideErrors();
+                });
+                field.jObj.blur(function(){
+                    objRef.validate(null, true);
+                });
+            }
         });
         
         return objRef;
@@ -193,7 +196,7 @@ jFF.core.FieldManager = function() {
 
 
 // A field that can be managed. Expects a jQuery object, a jFF validator and a jFF error handler
-jFF.core.Field = function(jObj, fieldConstraintsMessage, focusAndBlur) {
+jFF.core.Field = function(jObj, message, focusAndBlur) {
     var objRef = this;
     
     this.managers = new Array();
@@ -201,7 +204,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage, focusAndBlur) {
     this.handlers = new Array();
     
     this.jObj = jObj;
-    this.fieldConstraintsMessage = fieldConstraintsMessage;
+    this.message = message;
     
     // Activate validation on focus and blur
     if (focusAndBlur) {
@@ -303,14 +306,15 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage, focusAndBlur) {
 
 
 // Composite field. Acts like a Field, but handles a group of Fields
-jFF.core.CompositeField = function(fieldConstraintsMessage, minValid, focusAndBlur) {
+jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     var objRef = this;
     
     this.managers = new Array();
     this.handlers = new Array();
     this.fields = new Array();
+    this.jObj = null;
     
-    this.fieldConstraintsMessage = fieldConstraintsMessage;
+    this.message = message;
     this.minValid = minValid;
     
     // Is the composite field valid?
@@ -392,6 +396,8 @@ jFF.core.CompositeField = function(fieldConstraintsMessage, minValid, focusAndBl
         
         if (focusAndBlur) {
             objectToArray(arguments).forEach(function(field){
+                if (objRef.jObj) objRef.jObj.add(field.jObj);
+                else objRef.jObj = field.jObj;
                 field.jObj.focus(function(){
                     objRef.hideErrors();
                 });

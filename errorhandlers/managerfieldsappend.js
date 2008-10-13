@@ -14,7 +14,7 @@ jFF.errorhandlers.ManagerFieldsAppend = function(options) {
         var summedText = '';
         subject.fields.forEach(function(element){
             if (!element.valid) {
-                summedText += objRef.fieldWrapperText.replace(/%s/g, element.fieldConstraintsMessage);
+                summedText += objRef.fieldWrapperText.replace(/%s/g, element.message);
             }
         });
         var wholeText = $(objRef.mainWrapperText.replace(/%s/g, summedText));
