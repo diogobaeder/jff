@@ -973,6 +973,7 @@ jFF.behaviours.CheckMonitor = function(options) {
     this.trackerContainer = null;
     this.checkedContentCallback = null;
     this.uncheckerCallback = null;
+    this.trackersWrapper = null;
     
     this.checks.bind('click', function(event){
         if (!objRef.active) return;
@@ -1033,6 +1034,9 @@ jFF.behaviours.CheckMonitor = function(options) {
                     objRef.notify();
                 });
             });
+            if (objRef.trackersWrapper) {
+                objRef.trackerContainer.contents().wrapAll(objRef.trackersWrapper);
+            }
         }
         
         return objRef;
@@ -1044,10 +1048,11 @@ jFF.behaviours.CheckMonitor = function(options) {
         return objRef;
     };
     
-    this.tracker = function(jContainer, checkedContentCallback, uncheckerCallback) {
+    this.tracker = function(jContainer, checkedContentCallback, uncheckerCallback, trackersWrapper) {
         objRef.checkedContentCallback = checkedContentCallback;
         objRef.uncheckerCallback = uncheckerCallback;
         objRef.trackerContainer = jContainer;
+        objRef.trackersWrapper = trackersWrapper;
         
         return objRef;
     };
@@ -1082,6 +1087,7 @@ jFF.behaviours.SelectMonitor = function(options) {
     this.trackerContainer = null;
     this.selectedContentCallback = null;
     this.unselecterCallback = null;
+    this.trackersWrapper = null;
     
     this.selects.bind('click', function(event){
         if (!objRef.active) return;
@@ -1142,6 +1148,9 @@ jFF.behaviours.SelectMonitor = function(options) {
                     objRef.notify();
                 });
             });
+            if (objRef.trackersWrapper) {
+                objRef.trackerContainer.contents().wrapAll(objRef.trackersWrapper);
+            }
         }
         
         return objRef;
@@ -1153,10 +1162,11 @@ jFF.behaviours.SelectMonitor = function(options) {
         return objRef;
     };
     
-    this.tracker = function(jContainer, selectedContentCallback, unselecterCallback) {
+    this.tracker = function(jContainer, selectedContentCallback, unselecterCallback, trackersWrapper) {
         objRef.selectedContentCallback = selectedContentCallback;
         objRef.unselecterCallback = unselecterCallback;
         objRef.trackerContainer = jContainer;
+        objRef.trackersWrapper = trackersWrapper;
         
         return objRef;
     };

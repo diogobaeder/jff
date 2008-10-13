@@ -80,11 +80,12 @@ $(document).ready(function(){
     var checkMonitor = jFFBehaviour('check_monitor', $('.sampleCheck1').parent())
         .tracker($('#sampleCheck1_trackers'),
             function(checked){
-                return '<span>'+checked.next('label').text()+' was checked <a href="#" class="uncheck">(uncheck it)</a> </span> ';
+                return '<li>'+checked.next('label').text()+' was checked <a href="#" class="uncheck">(uncheck it)</a> </li> ';
             },
             function(tracker){
                 return tracker.find('a.uncheck');
-            }
+            },
+            '<ul class="trackers"></ul>'
         );
     $('#sampleCheck1_all').click(function(event){
         event.preventDefault();
@@ -101,11 +102,12 @@ $(document).ready(function(){
     var selectMonitor = jFFBehaviour('select_monitor', $('#sampleSelect1'))
         .tracker($('#sampleSelect1_trackers'),
             function(selected){
-                return '<span>'+selected.text()+' was selected <a href="#" class="unselect">(unselect it)</a> </span> ';
+                return '<li>'+selected.text()+' was selected <a href="#" class="unselect">(unselect it)</a> </li> ';
             },
             function(tracker){
                 return tracker.find('a.unselect');
-            }
+            },
+            '<ul class="trackers"></ul>'
         );
     $('#sampleSelect1_all').click(function(event){
         event.preventDefault();
