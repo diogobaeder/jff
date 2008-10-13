@@ -28,7 +28,7 @@ div.field.even {
 
 div.field label {
     position: relative;
-    width: 15em;
+    width: 20em;
 }
 
 div.field ul.checkbox {
@@ -51,5 +51,9 @@ div.field ul.checkbox li {
 div.field label.fixedSize {
     display: block;
     float: left;
-    width: 15em;
+    width: 20em;
+}
+
+div.field .trackers {
+    list-style-position: inside;
 }

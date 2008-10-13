@@ -51,13 +51,13 @@ window.jFF = function() {
 };
 
 // Field instance helper
-window.jFFField = function(jObj, fieldConstraintsMessage) {
-    return new jFF.core.Field(jObj, fieldConstraintsMessage);
+window.jFFField = function(jObj, fieldConstraintsMessage, focusAndBlur) {
+    return new jFF.core.Field(jObj, fieldConstraintsMessage, focusAndBlur);
 };
 
 // Field instance helper
-window.jFFCompositeField = function(fieldConstraintsMessage, minValid) {
-    return new jFF.core.CompositeField(fieldConstraintsMessage, minValid);
+window.jFFCompositeField = function(fieldConstraintsMessage, minValid, focusAndBlur) {
+    return new jFF.core.CompositeField(fieldConstraintsMessage, minValid, focusAndBlur);
 };
 
 // Behaviour instance helper
@@ -193,7 +193,7 @@ jFF.core.FieldManager = function() {
 
 
 // A field that can be managed. Expects a jQuery object, a jFF validator and a jFF error handler
-jFF.core.Field = function(jObj, fieldConstraintsMessage) {
+jFF.core.Field = function(jObj, fieldConstraintsMessage, focusAndBlur) {
     var objRef = this;
     
     this.managers = new Array();
@@ -202,6 +202,16 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
     
     this.jObj = jObj;
     this.fieldConstraintsMessage = fieldConstraintsMessage;
+    
+    // Activate validation on focus and blur
+    if (focusAndBlur) {
+        objRef.jObj.focus(function(){
+            objRef.hideErrors();
+        });
+        objRef.jObj.blur(function(){
+            objRef.validate(null, true);
+        });
+    }
     
     // Is the field valid?
     this.valid = true;
@@ -293,7 +303,7 @@ jFF.core.Field = function(jObj, fieldConstraintsMessage) {
 
 
 // Composite field. Acts like a Field, but handles a group of Fields
-jFF.core.CompositeField = function(fieldConstraintsMessage, minValid) {
+jFF.core.CompositeField = function(fieldConstraintsMessage, minValid, focusAndBlur) {
     var objRef = this;
     
     this.managers = new Array();
@@ -379,6 +389,17 @@ jFF.core.CompositeField = function(fieldConstraintsMessage, minValid) {
     // Adds one or more items to the field list
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
+        
+        if (focusAndBlur) {
+            objectToArray(arguments).forEach(function(field){
+                field.jObj.focus(function(){
+                    objRef.hideErrors();
+                });
+                field.jObj.blur(function(){
+                    objRef.validate(null, true);
+                });
+            });
+        }
         
         return objRef;
     };
