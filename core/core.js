@@ -2,16 +2,6 @@
 
 
 
-// Helper function for objects
-var objectToArray = function(object) {
-    if (object.length) {
-        var elements = new Array();
-        for (var i = 0; i < object.length; i++) {
-            elements.push(object[i]);
-        }
-        return elements;
-    }
-};
 // Helper methods for arrays
 Array.prototype.indexesOf = function(obj) {
     var foundItems = new Array();
@@ -62,7 +52,7 @@ window.jFFCompositeField = function(message, minValid, focusAndBlur) {
 
 // Behaviour instance helper
 window.jFFBehaviour = function() {
-    var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
+    var args = (arguments.length > 1) ? $.makeArray(arguments).slice(1, arguments.length) : [];
     return jFF.core.Factories.behaviour(arguments[0], args);
 };
 
@@ -95,7 +85,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? $.makeArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
@@ -151,7 +141,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        objectToArray(arguments).forEach(function(field){
+        $.makeArray(arguments).forEach(function(field){
             field.managers.push(objRef);
             
             if (focusAndBlur) {
@@ -225,7 +215,7 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
             objRef.validators.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? $.makeArray(arguments).slice(1, arguments.length) : [];
             objRef.validators.push(jFF.core.Factories.validator(arguments[0], args));
         }
         
@@ -238,7 +228,7 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? $.makeArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
@@ -326,7 +316,7 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
             objRef.handlers.push(arguments[0]);
         }
         else {
-            var args = (arguments.length > 1) ? objectToArray(arguments).slice(1, arguments.length) : [];
+            var args = (arguments.length > 1) ? $.makeArray(arguments).slice(1, arguments.length) : [];
             objRef.handlers.push(jFF.core.Factories.handler(arguments[0], args));
         }
         
@@ -395,7 +385,7 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
         objRef.fields.push.apply(objRef.fields, arguments);
         
         if (focusAndBlur) {
-            objectToArray(arguments).forEach(function(field){
+            $.makeArray(arguments).forEach(function(field){
                 if (objRef.jObj) objRef.jObj.add(field.jObj);
                 else objRef.jObj = field.jObj;
                 field.jObj.focus(function(){
