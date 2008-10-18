@@ -753,7 +753,6 @@ jFF.errorhandlers.ToggleVisibility = function(options) {
     this.errorVisible = false;
     
     this.show = function(subject) {
-      console.debug('show - '+objRef.onlyShowOrHide);
         if (!objRef.errorVisible && objRef.onlyShowOrHide != 'only_hide') {
             objRef.objects.show();
             objRef.errorVisible = true;
@@ -761,7 +760,6 @@ jFF.errorhandlers.ToggleVisibility = function(options) {
     };
     
     this.hide = function(subject) {
-      console.debug('hide - '+objRef.onlyShowOrHide);
         if (objRef.errorVisible && objRef.onlyShowOrHide != 'only_show') {
             objRef.objects.hide();
             objRef.errorVisible = false;
