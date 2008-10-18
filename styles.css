@@ -57,3 +57,7 @@ div.field label.fixedSize {
 div.field .trackers {
     list-style-position: inside;
 }
+
+p.startHidden {
+    display: none;
+}
