@@ -39,8 +39,8 @@ $(document).ready(function(){
         .validator('reg_ex', /^[a-zA-Z]*$/);
     var sampleCompositeField1 = jFFCompositeField('The first optional input must have numbers or the second must have alphabetic chars!', 1, true)
         .add(sampleField10, sampleField11)
-        .handler('toggle_visibility', $('p.startHidden'), 'only_show')
-        .handler('toggle_visibility', $('p.startVisible'), 'only_hide');
+        .handler('toggle_visibility', $('p.startHidden'), 'show_only')
+        .handler('toggle_visibility', $('p.startVisible'), 'hide_only');
     
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
     var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleField12, sampleCompositeField1)
