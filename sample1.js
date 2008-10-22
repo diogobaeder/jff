@@ -100,6 +100,13 @@ $(document).ready(function(){
         event.preventDefault();
         selectMonitor.invert();
     });
+    var charMonitor = jFFBehaviour('char_monitor', $('#sampleInput11'))
+        .listener(function(chars){
+            if (chars.toLowerCase() == 'diogo') {
+                alert("Yeah, that's my name!");
+                charMonitor.stop();
+            }
+        });
 
     window.sampleManager = sampleManager;
 });
