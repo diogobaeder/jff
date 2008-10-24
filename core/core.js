@@ -13,16 +13,6 @@ Array.prototype.indexesOf = function(obj) {
 Array.prototype.pull = function(index) {
     return this.splice(index, 1);
 };
-Array.prototype.remove = function(obj) {
-    var index = this.indexOf(obj);
-    if (index >= 0) this.pull(index);
-};
-Array.prototype.removeAll = function(obj) {
-    this.filter(function(element, index, array){
-        return (element != obj);
-    });
-    return this;
-};
 // Helper methods for strings
 String.prototype.ucfirst = function() {
     var first = this.substring(0,1).toUpperCase();
@@ -72,6 +62,23 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     // Flag to query if all the fields are valid
     this.valid = true;
     
+    // Bypass modifiers
+    this.bypass = false;
+    this.defaultValid = true;
+    
+    this.enable = function() {
+        objRef.bypass = false;
+        
+        return objRef;
+    }
+    
+    this.disable = function(defaultValid) {
+        objRef.bypass = true;
+        objRef.defaultValid = Boolean(defaultValid);
+        
+        return objRef;
+    }
+    
     // Maps a callback to all the fields of the list, using the current index and field as arguments
     this.forEach = function(callback) {
         objRef.fields.forEach(callback);
@@ -107,6 +114,8 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     
     // Checks for errors in the fields
     this.check = function(toggleErrors) {
+        if (objRef.bypass) return objRef.defaultValid;
+        
         var allValid = true;
         objRef.fields.forEach(function(field) {
             field.validate(function(fieldValid) {
@@ -157,13 +166,6 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
         return objRef;
     };
     
-    // Removes a field from the list
-    this.remove = function(field) {
-        objRef.fields.removeAll(field);
-        
-        return objRef;
-    };
-    
     // Pulls (removes and returns) an item from the field list
     this.pull = function(index) {
         return objRef.fields.pull(index);
@@ -209,6 +211,23 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     // Is the field valid?
     this.valid = true;
     
+    // Bypass modifiers
+    this.bypass = false;
+    this.defaultValid = true;
+    
+    this.enable = function() {
+        objRef.bypass = false;
+        
+        return objRef;
+    }
+    
+    this.disable = function(defaultValid) {
+        objRef.bypass = true;
+        objRef.defaultValid = Boolean(defaultValid);
+        
+        return objRef;
+    }
+    
     // Adds a validator
     this.validator = function() {
         if (arguments.length == 1 && typeof arguments[0] != 'string') {
@@ -249,6 +268,8 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     
     // Checks for errors in the fields
     this.check = function(toggleErrors) {
+        if (objRef.bypass) return objRef.defaultValid;
+        
         var allValid = true;
         objRef.validators.forEach(function(validator) {
             var valid = validator.validate(objRef);
@@ -284,13 +305,6 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
         
         return objRef;
     };
-    
-    // Removes a listener from this field
-    this.removeManager = function(fieldManager) {
-        fieldManager.remove(objRef);
-        
-        return objRef;
-    };
 };
 
 
@@ -309,6 +323,23 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     
     // Is the composite field valid?
     this.valid = true;
+    
+    // Bypass modifiers
+    this.bypass = false;
+    this.defaultValid = true;
+    
+    this.enable = function() {
+        objRef.bypass = false;
+        
+        return objRef;
+    }
+    
+    this.disable = function(defaultValid) {
+        objRef.bypass = true;
+        objRef.defaultValid = Boolean(defaultValid);
+        
+        return objRef;
+    }
     
     // Adds an error handler
     this.handler = function() {
@@ -338,6 +369,8 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     
     // Checks for errors in the fields
     this.check = function(toggleErrors) {
+        if (objRef.bypass) return objRef.defaultValid;
+        
         var valid = 0;
         objRef.fields.forEach(function(field) {
             field.validate(function(fieldValid) {
@@ -373,13 +406,6 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
         return objRef;
     };
     
-    // Removes a listener from this field
-    this.removeManager = function(fieldManager) {
-        fieldManager.remove(objRef);
-        
-        return objRef;
-    };
-    
     // Adds one or more items to the field list
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
@@ -396,13 +422,6 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
                 });
             });
         }
-        
-        return objRef;
-    };
-    
-    // Removes a field from the list
-    this.remove = function(field) {
-        objRef.fields.removeAll(field);
         
         return objRef;
     };
