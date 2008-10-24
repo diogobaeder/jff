@@ -43,7 +43,7 @@ $(document).ready(function(){
         .handler('toggle_visibility', $('p.startVisible'), 'hide_only');
     
     // Adding the fields to the manager, and then setting the validations to be made once the button is pressed
-    var sampleManager = jFF().add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleField12, sampleCompositeField1)
+    var sampleManager = jFF(null, true).add(sampleField1, sampleField2, sampleField3, sampleField4, sampleField5, sampleField6, sampleField7, sampleField8, sampleField9, sampleField12, sampleCompositeField1)
         .simpleButtonForm($('#sampleButton'), $('#sampleForm'), true)
         .handler('manager_fields_append', '<div class="error">Something in the form is not right... let\'s see:<ul>%s</ul></div>', '<li>%s</li>', $('div#formErrors'));
     
