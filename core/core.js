@@ -34,6 +34,15 @@ String.prototype.uToCamel = function() {
         return word.ucfirst();
     }).join('');
 };
+String.prototype.filtered = function() {
+    if (arguments.length == 0) return this;
+    
+    var tmp = String(this);
+    $.makeArray(arguments).forEach(function(filter){
+        tmp = tmp.replace(filter, '', 'g');
+    });
+    return tmp;
+};
 
 // Main function, acts as a package
 window.jFF = function(message, focusAndBlur) {
@@ -68,6 +77,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     this.fields = new Array();
     this.handlers = new Array();
     this.message = message;
+    this.focusAndBlur = focusAndBlur;
     
     // Flag to query if all the fields are valid
     this.valid = true;
@@ -163,7 +173,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
         $.makeArray(arguments).forEach(function(field){
             field.managers.push(objRef);
             
-            if (focusAndBlur) {
+            if (objRef.focusAndBlur) {
                 field.jObj.not(':checkbox,:radio').focus(function(){
                     objRef.hideErrors();
                 });
@@ -214,9 +224,10 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     
     this.jObj = jObj;
     this.message = message;
+    this.focusAndBlur = focusAndBlur;
     
     // Activate validation on focus and blur
-    if (focusAndBlur) {
+    if (objRef.focusAndBlur) {
         objRef.jObj.not(':checkbox,:radio').focus(function(){
             objRef.hideErrors();
         });
@@ -344,6 +355,7 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     
     this.message = message;
     this.minValid = minValid;
+    this.focusAndBlur = focusAndBlur;
     
     // Is the composite field valid?
     this.valid = true;
@@ -441,18 +453,19 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     this.add = function() {
         objRef.fields.push.apply(objRef.fields, arguments);
         
-        if (focusAndBlur) {
-            $.makeArray(arguments).forEach(function(field){
-                if (objRef.jObj) objRef.jObj.add(field.jObj);
-                else objRef.jObj = field.jObj;
+        $.makeArray(arguments).forEach(function(field){
+            if (objRef.jObj) objRef.jObj.add(field.jObj);
+            else objRef.jObj = field.jObj;
+            
+            if (objRef.focusAndBlur) {
                 field.jObj.not(':checkbox,:radio').focus(function(){
                     objRef.hideErrors();
                 });
                 field.jObj.not(':checkbox,:radio').blur(function(){
                     objRef.validate(null, true);
                 });
-            });
-        }
+            }
+        });
         
         return objRef;
     };

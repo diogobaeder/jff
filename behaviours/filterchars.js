@@ -13,10 +13,12 @@ jFF.behaviours.FilterChars = function(options) {
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
-        objRef.filters.forEach(function(element){
-            text = text.split(element).join('');
-        });
-        objRef.jField.val(text);
+        if (objRef.filters.forEach)
+            var filtered = text.filtered.apply(text, objRef.filters);
+        else
+            var filtered = text.filtered(objRef.filters);
+        
+        objRef.jField.val(filtered);
     });
     
     this.start = function() {

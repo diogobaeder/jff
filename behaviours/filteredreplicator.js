@@ -14,10 +14,12 @@ jFF.behaviours.FilteredReplicator = function(options) {
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
-        objRef.filters.forEach(function(element){
-            text = text.split(element).join('');
-        });
-        objRef.jDestination.val(text);
+        if (objRef.filters.forEach)
+            var filtered = text.filtered.apply(text, objRef.filters);
+        else
+            var filtered = text.filtered(objRef.filters);
+        
+        objRef.jDestination.val(filtered);
     });
     
     this.start = function() {
