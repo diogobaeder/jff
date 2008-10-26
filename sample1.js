@@ -108,6 +108,9 @@ $(document).ready(function(){
                 charMonitor.stop();
             }
         });
+        
+    var filteredMonitor = jFFBehaviour('char_monitor', $('#sampleInput8_2'))
+        .listener(console.debug);
 
     window.sampleManager = sampleManager;
 });

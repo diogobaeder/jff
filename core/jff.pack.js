@@ -39,7 +39,7 @@ String.prototype.filtered = function() {
     
     var tmp = String(this);
     $.makeArray(arguments).forEach(function(filter){
-        tmp = tmp.replace(filter, '', 'g');
+        tmp = tmp.split(filter).join('');
     });
     return tmp;
 };
@@ -173,11 +173,11 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
         $.makeArray(arguments).forEach(function(field){
             field.managers.push(objRef);
             
-            if (objRef.focusAndBlur) {
-                field.jObj.not(':checkbox,:radio').focus(function(){
+            if (objRef.focusAndBlur && field.focusAndBlur) {
+                field.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
                     objRef.hideErrors();
                 });
-                field.jObj.not(':checkbox,:radio').blur(function(){
+                field.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
                     objRef.validate(null, true);
                 });
             }
@@ -200,7 +200,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     
     // Simple method to link a button and a form to the manager, when not using Ajax
     this.simpleButtonForm = function(jButton, jForm, showErrors) {
-        jButton.click(function(event){
+        jButton.bind('click.jFF', function(event){
             event.preventDefault(); event.stopPropagation();
             
             if (objRef.validate(null, showErrors).valid) {
@@ -228,10 +228,10 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     
     // Activate validation on focus and blur
     if (objRef.focusAndBlur) {
-        objRef.jObj.not(':checkbox,:radio').focus(function(){
+        objRef.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
             objRef.hideErrors();
         });
-        objRef.jObj.not(':checkbox,:radio').blur(function(){
+        objRef.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
             objRef.validate(null, true);
         });
     }
@@ -457,11 +457,11 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
             if (objRef.jObj) objRef.jObj.add(field.jObj);
             else objRef.jObj = field.jObj;
             
-            if (objRef.focusAndBlur) {
-                field.jObj.not(':checkbox,:radio').focus(function(){
+            if (objRef.focusAndBlur && field.focusAndBlur) {
+                field.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
                     objRef.hideErrors();
                 });
-                field.jObj.not(':checkbox,:radio').blur(function(){
+                field.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
                     objRef.validate(null, true);
                 });
             }
@@ -899,7 +899,7 @@ jFF.behaviours.FilterChars = function(options) {
     this.jField = options[0];
     this.filters = options[1];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
@@ -936,7 +936,7 @@ jFF.behaviours.FilteredReplicator = function(options) {
     this.jDestination = options[1];
     this.filters = options[2];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
@@ -946,6 +946,7 @@ jFF.behaviours.FilteredReplicator = function(options) {
             var filtered = text.filtered(objRef.filters);
         
         objRef.jDestination.val(filtered);
+        objRef.jDestination.trigger('keyup');
     });
     
     this.start = function() {
@@ -972,7 +973,7 @@ jFF.behaviours.MaxChars = function(options) {
     this.jField = options[0];
     this.max = options[1];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
@@ -1009,7 +1010,7 @@ jFF.behaviours.MaxChecked = function(options) {
     this.checkedBoxes = 0;
     this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
-    this.checks.bind('click', function(event){
+    this.checks.bind('click.jFF', function(event){
         if (!objRef.active) return;
         var checkbox = event.target;
         objRef.checkedBoxes = objRef.checks.filter(':checked').length;
@@ -1043,10 +1044,11 @@ jFF.behaviours.Replicator = function(options) {
     this.jField = options[0];
     this.jDestination = options[1];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         objRef.jDestination.val(text);
+        objRef.jDestination.trigger('keyup');
     });
     
     this.start = function() {
@@ -1076,7 +1078,7 @@ jFF.behaviours.MaxSelected = function(options) {
     this.selectedOptions = 0;
     this.options = this.jField.filter('option').add(this.jField.find('option'));
     
-    this.options.bind('click', function(event){
+    this.options.bind('click.jFF', function(event){
         if (!objRef.active) return;
         var option = event.target;
         objRef.selectedOptions = objRef.options.filter(':selected').length;
@@ -1118,7 +1120,7 @@ jFF.behaviours.CheckMonitor = function(options) {
     this.uncheckerCallback = null;
     this.trackersWrapper = null;
     
-    this.checks.bind('click', function(event){
+    this.checks.bind('click.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();
@@ -1171,7 +1173,7 @@ jFF.behaviours.CheckMonitor = function(options) {
                 var tracker = $(objRef.checkedContentCallback(currentChecked));
                 objRef.trackerContainer.append(tracker);
                 var unchecker = objRef.uncheckerCallback(tracker);
-                unchecker.click(function(event){
+                unchecker.bind('click.jFF', function(event){
                     event.preventDefault();
                     currentChecked.attr('checked', false);
                     objRef.notify();
@@ -1232,7 +1234,7 @@ jFF.behaviours.SelectMonitor = function(options) {
     this.unselecterCallback = null;
     this.trackersWrapper = null;
     
-    this.selects.bind('click', function(event){
+    this.selects.bind('click.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();
@@ -1285,7 +1287,7 @@ jFF.behaviours.SelectMonitor = function(options) {
                 var tracker = $(objRef.selectedContentCallback(currentSelected));
                 objRef.trackerContainer.append(tracker);
                 var unselecter = objRef.unselecterCallback(tracker);
-                unselecter.click(function(event){
+                unselecter.bind('click.jFF', function(event){
                     event.preventDefault();
                     currentSelected.attr('selected', false);
                     objRef.notify();
@@ -1341,7 +1343,7 @@ jFF.behaviours.CharMonitor = function(options) {
     this.listeners = new Array();
     this.chars = null;
     
-    this.inputs.bind('keyup', function(event){
+    this.inputs.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();

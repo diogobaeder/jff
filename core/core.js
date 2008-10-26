@@ -39,7 +39,7 @@ String.prototype.filtered = function() {
     
     var tmp = String(this);
     $.makeArray(arguments).forEach(function(filter){
-        tmp = tmp.replace(filter, '', 'g');
+        tmp = tmp.split(filter).join('');
     });
     return tmp;
 };
@@ -173,11 +173,11 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
         $.makeArray(arguments).forEach(function(field){
             field.managers.push(objRef);
             
-            if (objRef.focusAndBlur) {
-                field.jObj.not(':checkbox,:radio').focus(function(){
+            if (objRef.focusAndBlur && field.focusAndBlur) {
+                field.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
                     objRef.hideErrors();
                 });
-                field.jObj.not(':checkbox,:radio').blur(function(){
+                field.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
                     objRef.validate(null, true);
                 });
             }
@@ -200,7 +200,7 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
     
     // Simple method to link a button and a form to the manager, when not using Ajax
     this.simpleButtonForm = function(jButton, jForm, showErrors) {
-        jButton.click(function(event){
+        jButton.bind('click.jFF', function(event){
             event.preventDefault(); event.stopPropagation();
             
             if (objRef.validate(null, showErrors).valid) {
@@ -228,10 +228,10 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     
     // Activate validation on focus and blur
     if (objRef.focusAndBlur) {
-        objRef.jObj.not(':checkbox,:radio').focus(function(){
+        objRef.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
             objRef.hideErrors();
         });
-        objRef.jObj.not(':checkbox,:radio').blur(function(){
+        objRef.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
             objRef.validate(null, true);
         });
     }
@@ -457,11 +457,11 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
             if (objRef.jObj) objRef.jObj.add(field.jObj);
             else objRef.jObj = field.jObj;
             
-            if (objRef.focusAndBlur) {
-                field.jObj.not(':checkbox,:radio').focus(function(){
+            if (objRef.focusAndBlur && field.focusAndBlur) {
+                field.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
                     objRef.hideErrors();
                 });
-                field.jObj.not(':checkbox,:radio').blur(function(){
+                field.jObj.not(':checkbox,:radio').bind('blur.jFF', function(){
                     objRef.validate(null, true);
                 });
             }

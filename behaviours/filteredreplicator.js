@@ -10,7 +10,7 @@ jFF.behaviours.FilteredReplicator = function(options) {
     this.jDestination = options[1];
     this.filters = options[2];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         
@@ -20,6 +20,7 @@ jFF.behaviours.FilteredReplicator = function(options) {
             var filtered = text.filtered(objRef.filters);
         
         objRef.jDestination.val(filtered);
+        objRef.jDestination.trigger('keyup');
     });
     
     this.start = function() {

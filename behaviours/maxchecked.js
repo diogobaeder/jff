@@ -12,7 +12,7 @@ jFF.behaviours.MaxChecked = function(options) {
     this.checkedBoxes = 0;
     this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
-    this.checks.bind('click', function(event){
+    this.checks.bind('click.jFF', function(event){
         if (!objRef.active) return;
         var checkbox = event.target;
         objRef.checkedBoxes = objRef.checks.filter(':checked').length;

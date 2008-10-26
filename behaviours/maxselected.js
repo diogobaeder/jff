@@ -12,7 +12,7 @@ jFF.behaviours.MaxSelected = function(options) {
     this.selectedOptions = 0;
     this.options = this.jField.filter('option').add(this.jField.find('option'));
     
-    this.options.bind('click', function(event){
+    this.options.bind('click.jFF', function(event){
         if (!objRef.active) return;
         var option = event.target;
         objRef.selectedOptions = objRef.options.filter(':selected').length;

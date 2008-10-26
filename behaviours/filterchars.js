@@ -9,7 +9,7 @@ jFF.behaviours.FilterChars = function(options) {
     this.jField = options[0];
     this.filters = options[1];
     
-    this.jField.bind('keyup', function(event){
+    this.jField.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         var text = objRef.jField.val();
         

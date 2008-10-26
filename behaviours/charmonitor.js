@@ -12,7 +12,7 @@ jFF.behaviours.CharMonitor = function(options) {
     this.listeners = new Array();
     this.chars = null;
     
-    this.inputs.bind('keyup', function(event){
+    this.inputs.bind('keyup.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();

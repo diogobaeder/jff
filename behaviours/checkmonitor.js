@@ -17,7 +17,7 @@ jFF.behaviours.CheckMonitor = function(options) {
     this.uncheckerCallback = null;
     this.trackersWrapper = null;
     
-    this.checks.bind('click', function(event){
+    this.checks.bind('click.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();
@@ -70,7 +70,7 @@ jFF.behaviours.CheckMonitor = function(options) {
                 var tracker = $(objRef.checkedContentCallback(currentChecked));
                 objRef.trackerContainer.append(tracker);
                 var unchecker = objRef.uncheckerCallback(tracker);
-                unchecker.click(function(event){
+                unchecker.bind('click.jFF', function(event){
                     event.preventDefault();
                     currentChecked.attr('checked', false);
                     objRef.notify();

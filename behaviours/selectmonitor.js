@@ -17,7 +17,7 @@ jFF.behaviours.SelectMonitor = function(options) {
     this.unselecterCallback = null;
     this.trackersWrapper = null;
     
-    this.selects.bind('click', function(event){
+    this.selects.bind('click.jFF', function(event){
         if (!objRef.active) return;
         
         objRef.notify();
@@ -70,7 +70,7 @@ jFF.behaviours.SelectMonitor = function(options) {
                 var tracker = $(objRef.selectedContentCallback(currentSelected));
                 objRef.trackerContainer.append(tracker);
                 var unselecter = objRef.unselecterCallback(tracker);
-                unselecter.click(function(event){
+                unselecter.bind('click.jFF', function(event){
                     event.preventDefault();
                     currentSelected.attr('selected', false);
                     objRef.notify();
