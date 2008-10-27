@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import jsmin
 
+reference = "// jQuery Form Framework - http://sourceforge.net/projects/jff - Release under GPL and MIT\n"
+
 def file_filtered_content(filename):
     try:
         lines = open(filename).readlines()
@@ -21,13 +23,13 @@ def processed_file_list(fileList):
 def pack_to(files, outputName):
     processedFiles = processed_file_list(files)
     output = open(outputName, 'w')
-    output.write(processedFiles)
+    output.write(reference+processedFiles)
     
 def minimize_to(files, outputName):
     processedFiles = processed_file_list(files)
     processedFiles = jsmin.jsmin(processedFiles)
     output = open(outputName, 'w')
-    output.write(processedFiles)
+    output.write(reference+processedFiles)
 
 
 

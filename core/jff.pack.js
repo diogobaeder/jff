@@ -1,3 +1,4 @@
+// jQuery Form Framework - http://sourceforge.net/projects/jff - Release under GPL and MIT
 (function($){
 
 
