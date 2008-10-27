@@ -13,7 +13,7 @@ jFF.errorhandlers.ToggleClasses = function(options) {
         if (!classes) return;
         if (classes.forEach) {
             classes.forEach(function(class){
-                addClasses(class);
+                objRef.target.addClass(classes);
             });
         }
         else objRef.target.addClass(classes);
