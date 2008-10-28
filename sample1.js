@@ -3,8 +3,8 @@ $(document).ready(function(){
     // Some fields to manage, each one handling a different type of error
     var sampleField1 = jFFField($('#sampleInput1'), 'Required field!', true)
         .validator('has_text')
-        .handler('append', $('<p class="error">Required field!</p>'), $('#sampleInput1').parent());
-        //.handler('toggle_classes', $('#sampleInput1'), ['fieldHasErrors', 'fieldHasErrors2'], 'hiddenErrors');
+        .handler('append', $('<p class="error">Required field!</p>'), $('#sampleInput1').parent())
+        .handler('toggle_classes', $('#sampleInput1'), ['fieldHasErrors', 'fieldHasErrors2'], 'hiddenErrors');
     var sampleField2 = jFFField($('#sampleInput2'), 'Only digits here!', true)
         .validator('reg_ex', /^\d*$/)
         .handler('append', $('<p class="error">Only digits here!</p>'), $('#sampleInput2').parent());
@@ -108,9 +108,6 @@ $(document).ready(function(){
                 charMonitor.stop();
             }
         });
-        
-    var filteredMonitor = jFFBehaviour('char_monitor', $('#sampleInput8_2'))
-        .listener(console.debug);
 
     window.sampleManager = sampleManager;
 });

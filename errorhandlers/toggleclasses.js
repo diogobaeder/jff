@@ -12,9 +12,8 @@ jFF.errorhandlers.ToggleClasses = function(options) {
     function addClasses(classes) {
         if (!classes) return;
         if (classes.forEach) {
-            break;
-            classes.forEach(function(class){
-                //objRef.target.addClass(classes);
+            classes.forEach(function(className){
+                addClasses(className);
             });
         }
         else objRef.target.addClass(classes);
@@ -23,9 +22,8 @@ jFF.errorhandlers.ToggleClasses = function(options) {
     function removeClasses(classes) {
         if (!classes) return;
         if (classes.forEach) {
-            break;
-            classes.forEach(function(class){
-                //objRef.target.removeClass(classes);
+            classes.forEach(function(className){
+                removeClasses(className);
             });
         }
         else objRef.target.removeClass(classes);
