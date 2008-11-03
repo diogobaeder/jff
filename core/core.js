@@ -298,6 +298,9 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
     this.check = function(toggleErrors) {
         if (objRef.bypass) return objRef.defaultValid;
         
+        // If the jObj was removed from DOM, returns true to avoid corrupting the validation process
+        if (objRef.jObj.parents('body').length == 0) return true;
+        
         var allValid = true;
         objRef.validators.forEach(function(validator) {
             var valid = validator.validate(objRef);
