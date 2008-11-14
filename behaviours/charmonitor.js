@@ -9,7 +9,7 @@ jFF.behaviours.CharMonitor = function(options) {
     this.jField = options[0];
     this.inputs = this.jField.filter(':text,textarea,:password,:hidden').add(this.jField.find(':text,textarea,:password,:hidden'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.chars = null;
     
     this.inputs.bind('keyup.jFF', function(event){

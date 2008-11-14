@@ -5,7 +5,7 @@
 
 // Helper methods for arrays
 Array.prototype.indexesOf = function(obj) {
-    var foundItems = new Array();
+    var foundItems = [];
     for (var i = 0; i < this.length; i++) {
         if (obj == this[i]) foundItems.push(i);
     }
@@ -75,8 +75,8 @@ jFF.core = new Object();
 jFF.core.FieldManager = function(message, focusAndBlur) {
     var objRef = this;
     
-    this.fields = new Array();
-    this.handlers = new Array();
+    this.fields = [];
+    this.handlers = [];
     this.message = message;
     this.focusAndBlur = focusAndBlur;
     
@@ -219,9 +219,11 @@ jFF.core.FieldManager = function(message, focusAndBlur) {
 jFF.core.Field = function(jObj, message, focusAndBlur) {
     var objRef = this;
     
-    this.managers = new Array();
-    this.validators = new Array();
-    this.handlers = new Array();
+    this.managers = [];
+    this.composites = [];
+    this.parents = [];
+    this.validators = [];
+    this.handlers = [];
     
     this.jObj = jObj;
     this.message = message;
@@ -300,7 +302,12 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
         if (objRef.bypass) return objRef.defaultValid;
         
         // If the jObj was removed from DOM, returns true to avoid corrupting the validation process
-        if (objRef.jObj.parents('body').length == 0) return true;
+        // Also removes this field from its managers and composite parents to avoid memory leak
+        if (objRef.jObj.parents('body').length == 0) {
+            this.managers.forEach(function(manager){ manager.fields.remove(objRef); });
+            this.composites.forEach(function(composite){ composite.fields.remove(objRef); });
+            return true;
+        }
         
         var allValid = true;
         objRef.validators.forEach(function(validator) {
@@ -352,9 +359,9 @@ jFF.core.Field = function(jObj, message, focusAndBlur) {
 jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
     var objRef = this;
     
-    this.managers = new Array();
-    this.handlers = new Array();
-    this.fields = new Array();
+    this.managers = [];
+    this.handlers = [];
+    this.fields = [];
     this.jObj = null;
     
     this.message = message;
@@ -460,6 +467,8 @@ jFF.core.CompositeField = function(message, minValid, focusAndBlur) {
         $.makeArray(arguments).forEach(function(field){
             if (objRef.jObj) objRef.jObj.add(field.jObj);
             else objRef.jObj = field.jObj;
+            
+            field.composites.push(objRef);
             
             if (objRef.focusAndBlur && field.focusAndBlur) {
                 field.jObj.not(':checkbox,:radio').bind('focus.jFF', function(){
@@ -1117,7 +1126,7 @@ jFF.behaviours.CheckMonitor = function(options) {
     this.jField = options[0];
     this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.checked = null;
     this.trackerContainer = null;
     this.checkedContentCallback = null;
@@ -1231,7 +1240,7 @@ jFF.behaviours.SelectMonitor = function(options) {
     this.jField = options[0];
     this.selects = this.jField.filter('option').add(this.jField.find('option'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.selected = null;
     this.trackerContainer = null;
     this.selectedContentCallback = null;
@@ -1344,7 +1353,7 @@ jFF.behaviours.CharMonitor = function(options) {
     this.jField = options[0];
     this.inputs = this.jField.filter(':text,textarea,:password,:hidden').add(this.jField.find(':text,textarea,:password,:hidden'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.chars = null;
     
     this.inputs.bind('keyup.jFF', function(event){

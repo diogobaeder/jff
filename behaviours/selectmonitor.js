@@ -10,7 +10,7 @@ jFF.behaviours.SelectMonitor = function(options) {
     this.jField = options[0];
     this.selects = this.jField.filter('option').add(this.jField.find('option'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.selected = null;
     this.trackerContainer = null;
     this.selectedContentCallback = null;

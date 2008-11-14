@@ -10,7 +10,7 @@ jFF.behaviours.CheckMonitor = function(options) {
     this.jField = options[0];
     this.checks = this.jField.filter(':checkbox').add(this.jField.find(':checkbox'));
     
-    this.listeners = new Array();
+    this.listeners = [];
     this.checked = null;
     this.trackerContainer = null;
     this.checkedContentCallback = null;
