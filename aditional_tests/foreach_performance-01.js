@@ -237,4 +237,50 @@ $(document).ready(function(){
             }
         }
     });
+    
+    
+    
+    /*
+    Selectors VS Traversing
+    */
+    // Using a simple ":not" selector
+    benchmark('not: simple selector', function(arr, last, end){
+        for (var i = 0; i < arr.length; i++) {
+            var parentDiv = $('#parent:not(.unexistant)');
+            if (arr[i] == last) {
+                end = time();
+                break;
+            }
+        }
+    });
+    // Using  "not" as a traversing method
+    benchmark('not: traversing', function(arr, last, end){
+        for (var i = 0; i < arr.length; i++) {
+            var parentDiv = $('#parent').not('.unexistant');
+            if (arr[i] == last) {
+                end = time();
+                break;
+            }
+        }
+    });
+    // Using a simple ":visible" selector
+    benchmark('visible: simple selector', function(arr, last, end){
+        for (var i = 0; i < arr.length; i++) {
+            var parentDiv = $('#parent:visible');
+            if (arr[i] == last) {
+                end = time();
+                break;
+            }
+        }
+    });
+    // Using  "visible" inside filter
+    benchmark('visible: filter', function(arr, last, end){
+        for (var i = 0; i < arr.length; i++) {
+            var parentDiv = $('#parent').filter(':visible');
+            if (arr[i] == last) {
+                end = time();
+                break;
+            }
+        }
+    });
 });
