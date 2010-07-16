@@ -1,3 +1,7 @@
-[submodule "test/screw-unit"]
-	path = test/screw-unit
+
+[submodule "vendor/screw-unit"]
+	path = vendor/screw-unit
 	url = git://github.com/nkallen/screw-unit.git
+[submodule "vendor/modernizr"]
+	path = vendor/modernizr
+	url = http://github.com/Modernizr/Modernizr.git
