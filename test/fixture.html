@@ -5,5 +5,55 @@
     <title>jQuery Form Framework - unit tests</title>
 </head>
 <body>
+    <h1>jQuery Form Framework - unit tests</h1>
+    <form action="#" method="get" id="main-form">
+    
+    
+    
+    <section id="main-tests">
+        <h2>Main tests - common field types</h2>
+        <fieldset id="checkbox-tests">
+            <legend>Checkbox tests</legend>
+            <input type="checkbox" name="checkbox1" id="checkbox1" value="1" />
+            <input type="checkbox" name="checkbox2" id="checkbox2" value="2" />
+            <input type="checkbox" name="checkbox3" id="checkbox3" value="3" />
+            <input type="checkbox" name="checkbox4" id="checkbox4" value="4" />
+            <input type="checkbox" name="checkbox5" id="checkbox5" value="5" />
+        </fieldset>
+    </section>
+    
+    
+    
+    <section id="html5-tests">
+        <h2>HTML5 field types</h2>
+        
+        <fieldset id="email-tests">
+            <legend>E-mail tests</legend>
+            <input type="email" name="email" id="email" />
+        </fieldset>
+        
+        <fieldset id="url-tests">
+            <legend>URL tests</legend>
+            <input type="url" name="url" id="url" />
+        </fieldset>
+        
+        <fieldset id="number-tests">
+            <legend>Number tests</legend>
+            <input type="number" name="number" id="number" max="200" min="100" step="10" />
+        </fieldset>
+        
+        <fieldset id="search-tests">
+            <legend>Search tests</legend>
+            <input type="search" name="search" id="search" />
+        </fieldset>
+    </section>
+    
+    
+    
+    <footer>
+        <button type="submit" id="submit">Submit</button>
+        <button type="reset" id="reset">Reset</button>
+    </footer>
+    </form>
 </body>
 </html>
