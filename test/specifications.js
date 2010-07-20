@@ -1,13 +1,13 @@
 
 describe 'jff'
-  describe '.fakeTest()'
+  describe 'fixture test'
   
     before_each
-      doc = jQuery(fixture('forms'))
+      doc = elements(fixture('forms'))
     end
     
-    it 'should throw an error'
-      true.should.be false
+    it 'there should be only one form'
+      doc.find('form').length.should.equal 1
     end
     
   end
