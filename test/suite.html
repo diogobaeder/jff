@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>jQuery Form Framework - specification tests</title>
 	<link type="text/css" rel="stylesheet" href="../vendor/jspec/lib/jspec.css" />
 	<script src="../vendor/jquery-1.4.2.min.js"></script>
 	<script src="../vendor/jspec/lib/jspec.js"></script>
 	<script src="../vendor/jspec/lib/jspec.jquery.js"></script>
+	<script src="../src/core.js"></script>
 	<script>
-		function runSuites() {
+		$(document).ready(function(){
+			$("#jspec-version").text(JSpec.version);
+			
 			JSpec
-			.exec('specifications.js')
+			.exec('specifications.spec')
 			.run({ fixturePath: '.' })
 			.report();
-		}
+		});
 	</script>
 </head>
-<body class="jspec" onLoad="runSuites();">
-	<div id="jspec-top"><h2 id="jspec-title">JSpec <em><script>document.write(JSpec.version)</script></em></h2></div>
+<body class="jspec">
+	<div id="jspec-top"><h2 id="jspec-title">JSpec <em id="jspec-version"></em></h2></div>
 	<div id="jspec"></div>
 	<div id="jspec-bottom"></div>
 </body>

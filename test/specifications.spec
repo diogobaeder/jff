@@ -16,7 +16,7 @@ describe 'jff'
     
     it 'should contain only one form'
       form = doc.find('form')
-      manager = jff.manager(form)
+      manager = new jff.Manager(form)
       manager.form.length.should.equal 1
     end
     
