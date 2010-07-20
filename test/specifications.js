@@ -1,14 +1,25 @@
-
 describe 'jff'
-  describe 'fixture test'
   
-    before_each
-      doc = elements(fixture('forms'))
-    end
+  before_each
+    doc = elements(fixture('forms'))
+  end
+
+  describe 'fixture'
     
-    it 'there should be only one form'
+    it 'should be only one form'
       doc.find('form').length.should.equal 1
     end
     
   end
+  
+  describe 'manager'
+    
+    it 'should contain only one form'
+      form = doc.find('form')
+      manager = jff.manager(form)
+      manager.form.length.should.equal 1
+    end
+    
+  end
+  
 end
