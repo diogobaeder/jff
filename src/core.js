@@ -1,43 +1,70 @@
 (function($){
 
-function Manager(form) {
-    this.form = form;
-    this.fields = [];
+// Constants for expando referencing
+var EXPANDO_MANAGER = 'jff.manager',
+    EXPANDO_FIELD = 'jff.field';
+
+function Manager(element) {
+    this._element = element;
+    this._fields = [];
+    
     this.initialized = true;
+    
+    element.data(EXPANDO_MANAGER, this);
 }
 
 Manager.prototype = {
     
-    field: function() {
+    fields: function() {
         if (!arguments.length) {
-            return this.fields;
+            return this._fields;
         }
-        
+        for (var i = 0, len = arguments.length; i < len; i++) {
+            this._initField(arguments[i]);
+        }
     },
     
-    _initFields: function() {
-        
+    _initField: function(fieldEl) {
+        fieldEl = this._element.find(fieldEl);
+        var field = new Field(this, fieldEl);
+        this._fields.push(field);
     }
 };
 
+
+
+function Field(manager, fieldEl) {
+    this._element = fieldEl;
+    this._manager = manager;
+    
+    this.initialized = true;
+    
+    fieldEl.data(EXPANDO_FIELD, this);
+}
+
+Field.prototype = {
+    
+};
+
+
+
 $.fn.jff = function() {
     var manager, methods,
-        previousManager = this.data('_jff_manager');
+        previousManager = this.data(EXPANDO_MANAGER);
     
     if (!previousManager) {
         manager = new Manager(this);
-        this.data('_jff_manager', manager);
     } else {
         manager = previousManager;
     }
     
-    methods = {
-        field: function() {
-            return manager.field.apply(manager, arguments);
+    newMethods = {
+        fields: function() {
+            return manager.fields.apply(manager, arguments);
         }
     };
     
-    this.extend(methods);
+    this.extend(newMethods);
     
     return this;
 };
