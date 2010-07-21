@@ -1,23 +1,21 @@
 describe 'jff'
   
-  before_each
-    doc = elements(fixture('forms'))
-  end
-
-  describe 'fixture'
-    
-    it 'should be only one form'
-      doc.find('form').length.should.equal 1
+  describe 'manager'
+  
+    before_each
+      doc = elements(fixture('forms'))
     end
     
-  end
-  
-  describe 'manager'
-    
-    it 'should contain only one form'
+    it 'should initialize the expando manager'
       form = doc.find('form')
-      manager = new jff.Manager(form)
-      manager.form.length.should.equal 1
+      form.jff()
+      form.data('_jff_manager').initialized.should.be_true
+    end
+    
+    it 'should start with 0 fields'
+      form = doc.find('form')
+      jff = form.jff()
+      jff.field().length.should.equal 0
     end
     
   end
